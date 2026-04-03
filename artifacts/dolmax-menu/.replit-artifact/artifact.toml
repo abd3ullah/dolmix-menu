@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "دولمكس - قائمة الطعام"
+version = "1.0.0"
+id = "artifacts/dolmax-menu"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22177
+
+[services.development]
+run = "pnpm --filter @workspace/dolmax-menu run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/dolmax-menu", "run", "build" ]
+publicDir = "artifacts/dolmax-menu/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22177"
+BASE_PATH = "/"
