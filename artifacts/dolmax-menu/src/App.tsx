@@ -162,7 +162,7 @@ function MenuApp() {
       </main>
 
       <footer className="mt-12 py-8 text-center border-t border-border/20 px-4">
-        <p className="font-bold text-xl text-primary mb-1">دولمكس</p>
+        <p className="font-bold text-xl text-primary mb-1">DOLMIX</p>
         <p className="text-sm text-muted-foreground">جميع الأسعار بالدينار العراقي</p>
       </footer>
 

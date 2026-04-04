@@ -28,7 +28,7 @@ export function CartDrawer({ open, onOpenChange, cart }: CartDrawerProps) {
       return;
     }
 
-    let orderText = `🌿 طلب جديد من دولمكس\n\n`;
+    let orderText = `🌿 طلب جديد من DOLMIX\n\n`;
     orderText += `الاسم: ${name}\n`;
     orderText += `رقم الهاتف: ${phone}\n\n`;
     orderText += `الطلبات:\n`;
@@ -62,7 +62,7 @@ export function CartDrawer({ open, onOpenChange, cart }: CartDrawerProps) {
               </Button>
             )}
           </SheetTitle>
-          <SheetDescription className="hidden">سلة طلبات دولمكس</SheetDescription>
+          <SheetDescription className="hidden">سلة طلبات DOLMIX</SheetDescription>
         </SheetHeader>
 
         <div className="flex-1 overflow-y-auto p-4 custom-scrollbar">

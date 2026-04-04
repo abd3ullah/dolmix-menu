@@ -13,7 +13,7 @@ export function Header({ searchQuery, setSearchQuery }: HeaderProps) {
       
       <div className="relative z-10 max-w-md mx-auto">
         <h1 className="text-5xl font-bold text-primary mb-2 tracking-tight" style={{ fontFamily: 'var(--font-serif)' }}>
-          دولمكس
+          DOLMIX
         </h1>
         <div className="flex items-center justify-center gap-2 mb-4">
           <div className="h-px bg-primary/30 w-12" />

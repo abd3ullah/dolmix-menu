@@ -42,7 +42,7 @@ export const menuData: MenuItem[] = [
       { id: 's_l',      label: 'L',               pieces: 20, price: 8000  },
       { id: 's_xl',     label: 'XL',              pieces: 40, price: 15000 },
       { id: 's_xxl',    label: 'XXL',             pieces: 60, price: 23000 },
-      { id: 's_dolmax', label: 'طبق دولمكس',      pieces: 14, price: 5000  },
+      { id: 's_dolmax', label: 'طبق DOLMIX',       pieces: 14, price: 5000  },
       { id: 's_party',  label: 'صينية الضيافة',   pieces: 70, price: 25000 },
     ]
   },
@@ -57,7 +57,7 @@ export const menuData: MenuItem[] = [
       { id: 's_l',      label: 'L',               pieces: 20, price: 9750  },
       { id: 's_xl',     label: 'XL',              pieces: 40, price: 19750 },
       { id: 's_xxl',    label: 'XXL',             pieces: 60, price: 28750 },
-      { id: 's_dolmax', label: 'طبق دولمكس',      pieces: 14, price: 6750  },
+      { id: 's_dolmax', label: 'طبق DOLMIX',       pieces: 14, price: 6750  },
       { id: 's_party',  label: 'صينية الضيافة',   pieces: 70, price: 33750 },
     ]
   },
@@ -73,7 +73,7 @@ export const menuData: MenuItem[] = [
       { id: 's_l',      label: 'L',           pieces: 20, price: 8000  },
       { id: 's_xl',     label: 'XL',          pieces: 40, price: 15000 },
       { id: 's_xxl',    label: 'XXL',         pieces: 60, price: 23000 },
-      { id: 's_dolmax', label: 'طبق دولمكس',  pieces: 14, price: 5000  },
+      { id: 's_dolmax', label: 'طبق DOLMIX',  pieces: 14, price: 5000  },
     ]
   },
   {
@@ -86,7 +86,7 @@ export const menuData: MenuItem[] = [
       { id: 's_l',      label: 'L',           pieces: 20, price: 8000  },
       { id: 's_xl',     label: 'XL',          pieces: 40, price: 15000 },
       { id: 's_xxl',    label: 'XXL',         pieces: 60, price: 23000 },
-      { id: 's_dolmax', label: 'طبق دولمكس',  pieces: 14, price: 5000  },
+      { id: 's_dolmax', label: 'طبق DOLMIX',  pieces: 14, price: 5000  },
     ]
   },
   {
@@ -99,7 +99,7 @@ export const menuData: MenuItem[] = [
       { id: 's_l',      label: 'L',           pieces: 20, price: 8000  },
       { id: 's_xl',     label: 'XL',          pieces: 40, price: 15000 },
       { id: 's_xxl',    label: 'XXL',         pieces: 60, price: 23000 },
-      { id: 's_dolmax', label: 'طبق دولمكس',  pieces: 14, price: 5000  },
+      { id: 's_dolmax', label: 'طبق DOLMIX',  pieces: 14, price: 5000  },
     ]
   },
 
@@ -112,7 +112,7 @@ export const menuData: MenuItem[] = [
   { id: 'd6', name: 'ماء',    price: 500, category: 'drinks', image: img('drink-water.png')  },
 
   // ─── الصوص ────────────────────────────────────────────────────────────────
-  { id: 's1', name: 'صوص دولمكس',  price: 500, category: 'sauces', image: img('sauce-dolmax.png') },
+  { id: 's1', name: 'صوص DOLMIX',  price: 500, category: 'sauces', image: img('sauce-dolmax.png') },
   { id: 's2', name: 'صوص سبايسي',  price: 500, category: 'sauces', image: img('sauce-spicy.png')  },
   { id: 's3', name: 'صوص تكساس',   price: 500, category: 'sauces', image: img('sauce-texas.png')  },
   { id: 's4', name: 'صوص باربيكيو', price: 500, category: 'sauces', image: img('sauce-bbq.png')   },
