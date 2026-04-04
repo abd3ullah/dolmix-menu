@@ -60,3 +60,63 @@ id = "WYumXSuIF29TsRT-JCsKY"
 uri = "file://artifacts/dolmax-menu/public/images/grape-leaves-lemon.png"
 type = "image"
 title = "grape-leaves-lemon"
+
+[[generated]]
+id = "UEWAnYDAe3Kj2VctD1L4g"
+uri = "file://artifacts/dolmax-menu/public/images/mojito-lemon-mint.png"
+type = "image"
+title = "mojito-lemon-mint"
+
+[[generated]]
+id = "rs-2dNpEGvLOdnicMYBns"
+uri = "file://artifacts/dolmax-menu/public/images/mojito-pomegranate.png"
+type = "image"
+title = "mojito-pomegranate"
+
+[[generated]]
+id = "YRcOKYBqJVcw366fABvz3"
+uri = "file://artifacts/dolmax-menu/public/images/mojito-berry.png"
+type = "image"
+title = "mojito-berry"
+
+[[generated]]
+id = "9MOQ6wqOozin5hCv7i66g"
+uri = "file://artifacts/dolmax-menu/public/images/mojito-blueberry.png"
+type = "image"
+title = "mojito-blueberry"
+
+[[generated]]
+id = "s_CbbLT6WBGftImnGoDy_"
+uri = "file://artifacts/dolmax-menu/public/images/ice-coffee.png"
+type = "image"
+title = "iced-coffee"
+
+[[generated]]
+id = "xOxQVksAbsFWiRQUehJ3f"
+uri = "file://artifacts/dolmax-menu/public/images/sauce-dolmax.png"
+type = "image"
+title = "dolmax-house-sauce"
+
+[[generated]]
+id = "KjVk5Be5DcDAHsmsGMeo-"
+uri = "file://artifacts/dolmax-menu/public/images/sauce-spicy.png"
+type = "image"
+title = "spicy-sauce"
+
+[[generated]]
+id = "WCFEHedZbjzpoEeQqYeNi"
+uri = "file://artifacts/dolmax-menu/public/images/sauce-texas.png"
+type = "image"
+title = "texas-sauce"
+
+[[generated]]
+id = "NxR3BxnCMKqj3r0N1rdBc"
+uri = "file://artifacts/dolmax-menu/public/images/sauce-bbq.png"
+type = "image"
+title = "bbq-sauce"
+
+[[generated]]
+id = "ZjvEldS3jWUzSEaUYo1Gh"
+uri = "file://artifacts/dolmax-menu/public/images/drinks-generic.png"
+type = "image"
+title = "cold-drinks"

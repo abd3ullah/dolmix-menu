@@ -1,0 +1,65 @@
+Add the additional menu sections shown in the newly attached menu images, and do not duplicate any category or item that was already added before.
+
+Important rule:
+- Keep all previously added sections exactly as they are
+- Only add the new extra sections from the latest attached images
+- Do not recreate or duplicate old sections like:
+  - الفتة
+  - المحاشي
+  - ورق العنب
+unless you are only enriching them with missing visual details or correct images
+- If an item already exists, do not add it again as a duplicate card
+- Merge intelligently and keep the final menu clean and organized
+
+New sections to add from the attached images:
+
+1) قسم المشروبات
+Items:
+- بيبسي — 500 IQD
+- سبرايت — 500 IQD
+- فانتا — 500 IQD
+- ديو — 500 IQD
+- لبن — 500 IQD
+- ماء — 500 IQD
+
+2) قسم العصائر
+Items:
+- صوص دولمكس — 500 IQD
+- صوص سبايسي — 500 IQD
+- صوص تكساس — 500 IQD
+- صوص باربيكيو — 500 IQD
+
+3) قسم المشروبات المنعشة
+Items:
+- موهيتو ليمون ونعناع — 3,750 IQD
+- موهيتو رمان — 3,500 IQD
+- موهيتو باري — 5,000 IQD
+- موهيتو بلوبيري — 3,500 IQD
+- آيس كوفي — 2,500 IQD
+
+4) Add Instagram follow section
+- Add a stylish section for Instagram
+- Include a QR code placeholder or image area
+- Add Arabic text:
+  للمتابعة على انستغرام
+- Make it elegant and consistent with the menu identity
+
+Image rules:
+- Every item in every section must have an image
+- If a real image exists in the attached images, use it or crop/reference it properly
+- If a real image is not available, use a premium placeholder image
+- No item should appear as text only
+
+UI and organization rules:
+- Add these new sections into the category navigation
+- Keep the menu flow elegant and non-repetitive
+- Preserve premium RTL Arabic mobile-first design
+- Make drinks and sauces easy to add directly to cart
+- Show item image, item name, price, and add-to-cart button for each new item
+- Keep the shopping cart logic working correctly with these added sections
+- Ensure all new items can be combined in the same cart with previously added items
+
+Data integrity rule:
+Before rendering the final menu, deduplicate all categories and items.
+If a category already exists, update or enrich it instead of duplicating it.
+The final result should feel like one unified premium restaurant menu, not separated repeated blocks.

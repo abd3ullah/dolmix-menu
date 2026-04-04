@@ -5,42 +5,45 @@ export type SizeOption = {
   price: number;
 };
 
+export type MenuCategory = 'fatta' | 'mahashi' | 'grape_leaves' | 'drinks' | 'sauces' | 'refreshing';
+
 export type MenuItem = {
   id: string;
   name: string;
   description?: string;
   price?: number;
   sizes?: SizeOption[];
-  category: 'fatta' | 'mahashi' | 'grape_leaves';
+  category: MenuCategory;
   image: string;
 };
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+const img = (name: string) => `${BASE}/images/${name}`;
 
 export const menuData: MenuItem[] = [
-  // Fatta
-  { id: 'f1', name: 'فتة ورق عنب', price: 3500, category: 'fatta', image: `${BASE}/images/fatta-warq-enab.png` },
-  { id: 'f2', name: 'فتة الجبس', price: 3500, category: 'fatta', image: `${BASE}/images/fatta-jibis.png` },
-  { id: 'f3', name: 'فتة الباقلاء', price: 5000, category: 'fatta', image: `${BASE}/images/fatta-baqlawa.png` },
-  { id: 'f4', name: 'فتة اندومي', price: 3500, category: 'fatta', image: `${BASE}/images/fatta-indomie.png` },
-  { id: 'f5', name: 'فتة تكساس', price: 4500, category: 'fatta', image: `${BASE}/images/fatta-texas.png` },
-  { id: 'f6', name: 'فتة باريكيو', price: 4500, category: 'fatta', image: `${BASE}/images/fatta-bbq.png` },
-  { id: 'f7', name: 'فتة سبايسي', price: 3500, category: 'fatta', image: `${BASE}/images/fatta-spicy.png` },
+  // ─── الفتة ────────────────────────────────────────────────────────────────
+  { id: 'f1', name: 'فتة ورق عنب',  price: 3500, category: 'fatta', image: img('fatta-warq-enab.png') },
+  { id: 'f2', name: 'فتة الجبس',    price: 3500, category: 'fatta', image: img('fatta-jibis.png') },
+  { id: 'f3', name: 'فتة الباقلاء', price: 5000, category: 'fatta', image: img('fatta-baqlawa.png') },
+  { id: 'f4', name: 'فتة اندومي',   price: 3500, category: 'fatta', image: img('fatta-indomie.png') },
+  { id: 'f5', name: 'فتة تكساس',    price: 4500, category: 'fatta', image: img('fatta-texas.png') },
+  { id: 'f6', name: 'فتة باريكيو',  price: 4500, category: 'fatta', image: img('fatta-bbq.png') },
+  { id: 'f7', name: 'فتة سبايسي',   price: 3500, category: 'fatta', image: img('fatta-spicy.png') },
 
-  // Mahashi
+  // ─── المحاشي ──────────────────────────────────────────────────────────────
   {
     id: 'm1',
     name: 'مشكل ليمون بدون لحم',
     description: 'الحبات اختياري: ورق عنب، بصل، شجر',
     category: 'mahashi',
-    image: `${BASE}/images/mahashi-lemon.png`,
+    image: img('mahashi-lemon.png'),
     sizes: [
-      { id: 's_m', label: 'M', pieces: 7, price: 3000 },
-      { id: 's_l', label: 'L', pieces: 20, price: 8000 },
-      { id: 's_xl', label: 'XL', pieces: 40, price: 15000 },
-      { id: 's_xxl', label: 'XXL', pieces: 60, price: 23000 },
-      { id: 's_dolmax', label: 'طبق دولمكس', pieces: 14, price: 5000 },
-      { id: 's_party', label: 'صينية الضيافة', pieces: 70, price: 25000 },
+      { id: 's_m',      label: 'M',               pieces: 7,  price: 3000  },
+      { id: 's_l',      label: 'L',               pieces: 20, price: 8000  },
+      { id: 's_xl',     label: 'XL',              pieces: 40, price: 15000 },
+      { id: 's_xxl',    label: 'XXL',             pieces: 60, price: 23000 },
+      { id: 's_dolmax', label: 'طبق دولمكس',      pieces: 14, price: 5000  },
+      { id: 's_party',  label: 'صينية الضيافة',   pieces: 70, price: 25000 },
     ]
   },
   {
@@ -48,55 +51,76 @@ export const menuData: MenuItem[] = [
     name: 'مشكل دبس الرمان مع لحم',
     description: 'الحبات اختياري: ورق عنب، بصل، شجر، بطاطا، فلفل، باذنجان',
     category: 'mahashi',
-    image: `${BASE}/images/mahashi-pomegranate.png`,
+    image: img('mahashi-pomegranate.png'),
     sizes: [
-      { id: 's_m', label: 'M', pieces: 7, price: 4000 },
-      { id: 's_l', label: 'L', pieces: 20, price: 9750 },
-      { id: 's_xl', label: 'XL', pieces: 40, price: 19750 },
-      { id: 's_xxl', label: 'XXL', pieces: 60, price: 28750 },
-      { id: 's_dolmax', label: 'طبق دولمكس', pieces: 14, price: 6750 },
-      { id: 's_party', label: 'صينية الضيافة', pieces: 70, price: 33750 },
+      { id: 's_m',      label: 'M',               pieces: 7,  price: 4000  },
+      { id: 's_l',      label: 'L',               pieces: 20, price: 9750  },
+      { id: 's_xl',     label: 'XL',              pieces: 40, price: 19750 },
+      { id: 's_xxl',    label: 'XXL',             pieces: 60, price: 28750 },
+      { id: 's_dolmax', label: 'طبق دولمكس',      pieces: 14, price: 6750  },
+      { id: 's_party',  label: 'صينية الضيافة',   pieces: 70, price: 33750 },
     ]
   },
 
-  // Grape Leaves
+  // ─── ورق العنب ────────────────────────────────────────────────────────────
   {
     id: 'g1',
     name: 'ورق عنب ليمون',
     category: 'grape_leaves',
-    image: `${BASE}/images/grape-leaves-lemon.png`,
+    image: img('grape-leaves-lemon.png'),
     sizes: [
-      { id: 's_m', label: 'M', pieces: 7, price: 3000 },
-      { id: 's_l', label: 'L', pieces: 20, price: 8000 },
-      { id: 's_xl', label: 'XL', pieces: 40, price: 15000 },
-      { id: 's_xxl', label: 'XXL', pieces: 60, price: 23000 },
-      { id: 's_dolmax', label: 'طبق دولمكس', pieces: 14, price: 5000 },
+      { id: 's_m',      label: 'M',           pieces: 7,  price: 3000  },
+      { id: 's_l',      label: 'L',           pieces: 20, price: 8000  },
+      { id: 's_xl',     label: 'XL',          pieces: 40, price: 15000 },
+      { id: 's_xxl',    label: 'XXL',         pieces: 60, price: 23000 },
+      { id: 's_dolmax', label: 'طبق دولمكس',  pieces: 14, price: 5000  },
     ]
   },
   {
     id: 'g2',
     name: 'ورق عنب دبس رمان',
     category: 'grape_leaves',
-    image: `${BASE}/images/grape-leaves-pomegranate.png`,
+    image: img('grape-leaves-pomegranate.png'),
     sizes: [
-      { id: 's_m', label: 'M', pieces: 7, price: 3000 },
-      { id: 's_l', label: 'L', pieces: 20, price: 8000 },
-      { id: 's_xl', label: 'XL', pieces: 40, price: 15000 },
-      { id: 's_xxl', label: 'XXL', pieces: 60, price: 23000 },
-      { id: 's_dolmax', label: 'طبق دولمكس', pieces: 14, price: 5000 },
+      { id: 's_m',      label: 'M',           pieces: 7,  price: 3000  },
+      { id: 's_l',      label: 'L',           pieces: 20, price: 8000  },
+      { id: 's_xl',     label: 'XL',          pieces: 40, price: 15000 },
+      { id: 's_xxl',    label: 'XXL',         pieces: 60, price: 23000 },
+      { id: 's_dolmax', label: 'طبق دولمكس',  pieces: 14, price: 5000  },
     ]
   },
   {
     id: 'g3',
     name: 'ورق عنب سبايسي',
     category: 'grape_leaves',
-    image: `${BASE}/images/grape-leaves-spicy.png`,
+    image: img('grape-leaves-spicy.png'),
     sizes: [
-      { id: 's_m', label: 'M', pieces: 7, price: 3000 },
-      { id: 's_l', label: 'L', pieces: 20, price: 8000 },
-      { id: 's_xl', label: 'XL', pieces: 40, price: 15000 },
-      { id: 's_xxl', label: 'XXL', pieces: 60, price: 23000 },
-      { id: 's_dolmax', label: 'طبق دولمكس', pieces: 14, price: 5000 },
+      { id: 's_m',      label: 'M',           pieces: 7,  price: 3000  },
+      { id: 's_l',      label: 'L',           pieces: 20, price: 8000  },
+      { id: 's_xl',     label: 'XL',          pieces: 40, price: 15000 },
+      { id: 's_xxl',    label: 'XXL',         pieces: 60, price: 23000 },
+      { id: 's_dolmax', label: 'طبق دولمكس',  pieces: 14, price: 5000  },
     ]
   },
+
+  // ─── المشروبات ────────────────────────────────────────────────────────────
+  { id: 'd1', name: 'بيبسي',  price: 500, category: 'drinks', image: img('drink-pepsi.png')  },
+  { id: 'd2', name: 'سبرايت', price: 500, category: 'drinks', image: img('drink-sprite.png') },
+  { id: 'd3', name: 'فانتا',  price: 500, category: 'drinks', image: img('drink-fanta.png')  },
+  { id: 'd4', name: 'ديو',    price: 500, category: 'drinks', image: img('drink-dew.png')    },
+  { id: 'd5', name: 'لبن',    price: 500, category: 'drinks', image: img('drink-laban.png')  },
+  { id: 'd6', name: 'ماء',    price: 500, category: 'drinks', image: img('drink-water.png')  },
+
+  // ─── الصوص ────────────────────────────────────────────────────────────────
+  { id: 's1', name: 'صوص دولمكس',  price: 500, category: 'sauces', image: img('sauce-dolmax.png') },
+  { id: 's2', name: 'صوص سبايسي',  price: 500, category: 'sauces', image: img('sauce-spicy.png')  },
+  { id: 's3', name: 'صوص تكساس',   price: 500, category: 'sauces', image: img('sauce-texas.png')  },
+  { id: 's4', name: 'صوص باربيكيو', price: 500, category: 'sauces', image: img('sauce-bbq.png')   },
+
+  // ─── المشروبات المنعشة ────────────────────────────────────────────────────
+  { id: 'r1', name: 'موهيتو ليمون ونعناع', price: 3750, category: 'refreshing', image: img('mojito-lemon-mint.png')  },
+  { id: 'r2', name: 'موهيتو رمان',          price: 3500, category: 'refreshing', image: img('mojito-pomegranate.png') },
+  { id: 'r3', name: 'موهيتو باري',          price: 5000, category: 'refreshing', image: img('mojito-berry.png')       },
+  { id: 'r4', name: 'موهيتو بلوبيري',       price: 3500, category: 'refreshing', image: img('mojito-blueberry.png')   },
+  { id: 'r5', name: 'آيس كوفي',             price: 2500, category: 'refreshing', image: img('ice-coffee.png')         },
 ];

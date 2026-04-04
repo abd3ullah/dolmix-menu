@@ -11,6 +11,9 @@ import { FeaturedSection } from "./components/FeaturedSection";
 import { FattaSection } from "./components/FattaSection";
 import { MahasshiSection } from "./components/MahasshiSection";
 import { GrapeLeafSection } from "./components/GrapeLeafSection";
+import { SimpleGridSection } from "./components/SimpleGridSection";
+import { RefreshingSection } from "./components/RefreshingSection";
+import { InstagramSection } from "./components/InstagramSection";
 import { CartDrawer } from "./components/CartDrawer";
 import { FloatingCartButton } from "./components/FloatingCartButton";
 import { FixedActionButtons } from "./components/FixedActionButtons";
@@ -20,13 +23,14 @@ import { useCart } from "./hooks/useCart";
 
 const queryClient = new QueryClient();
 
+const SECTION_IDS = ['fatta', 'mahashi', 'grape_leaves', 'drinks', 'sauces', 'refreshing'];
+
 function MenuApp() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
   const [isCartOpen, setIsCartOpen] = useState(false);
   const cart = useCart();
 
-  // Scroll to section handling
   const handleSelectCategory = (category: string) => {
     setActiveCategory(category);
     if (category === 'all') {
@@ -34,14 +38,12 @@ function MenuApp() {
     } else {
       const el = document.getElementById(category);
       if (el) {
-        // Offset for the sticky header
-        const y = el.getBoundingClientRect().top + window.scrollY - 100;
+        const y = el.getBoundingClientRect().top + window.scrollY - 110;
         window.scrollTo({ top: y, behavior: 'smooth' });
       }
     }
   };
 
-  // Intersection observer to highlight active tab
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -51,105 +53,131 @@ function MenuApp() {
           }
         });
       },
-      { rootMargin: '-100px 0px -60% 0px' }
+      { rootMargin: '-100px 0px -55% 0px' }
     );
-
-    const sections = ['fatta', 'mahashi', 'grape_leaves'];
-    sections.forEach((id) => {
+    SECTION_IDS.forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
-
     return () => observer.disconnect();
   }, []);
 
   const filteredData = useMemo(() => {
-    if (!searchQuery) return menuData;
-    return menuData.filter(item => 
-      item.name.includes(searchQuery) || 
-      (item.description && item.description.includes(searchQuery))
+    if (!searchQuery.trim()) return menuData;
+    const q = searchQuery.trim();
+    return menuData.filter(item =>
+      item.name.includes(q) || (item.description && item.description.includes(q))
     );
   }, [searchQuery]);
 
-  const fattaItems = filteredData.filter(item => item.category === 'fatta');
-  const mahashiItems = filteredData.filter(item => item.category === 'mahashi');
-  const grapeLeavesItems = filteredData.filter(item => item.category === 'grape_leaves');
+  const byCategory = (cat: string) => filteredData.filter(i => i.category === cat);
 
-  // Select a few featured items
   const featuredItems = [
-    menuData.find(i => i.id === 'm2')!, // مشكل دبس الرمان مع لحم
-    menuData.find(i => i.id === 'g2')!, // ورق عنب دبس رمان
+    menuData.find(i => i.id === 'm2')!,
+    menuData.find(i => i.id === 'g2')!,
   ].filter(Boolean);
 
+  const noResults = searchQuery.trim() && filteredData.length === 0;
+
   return (
-    <div className="min-h-[100dvh] pb-32" dir="rtl">
+    <div className="min-h-[100dvh] pb-36" dir="rtl">
       <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-      
+
       {!searchQuery && (
-        <CategoryNav 
-          activeCategory={activeCategory} 
-          onSelectCategory={handleSelectCategory} 
+        <CategoryNav
+          activeCategory={activeCategory}
+          onSelectCategory={handleSelectCategory}
         />
       )}
 
-      <main className="max-w-md mx-auto mt-6 space-y-8">
-        {searchQuery && filteredData.length === 0 ? (
-          <div className="text-center py-16 px-4">
+      <main className="max-w-md mx-auto mt-2">
+        {noResults ? (
+          <div className="text-center py-20 px-4">
+            <div className="w-20 h-20 rounded-full bg-card border border-border/40 flex items-center justify-center mx-auto mb-4">
+              <span className="text-4xl">🔍</span>
+            </div>
             <h3 className="text-xl font-bold text-primary mb-2">لا توجد نتائج</h3>
-            <p className="text-muted-foreground">لم نتمكن من العثور على أطباق مطابقة لبحثك.</p>
+            <p className="text-muted-foreground">لم نعثر على أطباق مطابقة. جرب كلمة أخرى.</p>
           </div>
         ) : (
           <>
             {!searchQuery && (
-              <FeaturedSection 
-                items={featuredItems} 
-                getItemQuantity={cart.getItemQuantity} 
-                onAdd={cart.addToCart} 
-                onUpdateQty={cart.updateQuantity} 
+              <FeaturedSection
+                items={featuredItems}
+                getItemQuantity={cart.getItemQuantity}
+                onAdd={cart.addToCart}
+                onUpdateQty={cart.updateQuantity}
               />
             )}
 
-            <FattaSection 
-              items={fattaItems} 
-              getItemQuantity={cart.getItemQuantity} 
-              onAdd={cart.addToCart} 
-              onUpdateQty={cart.updateQuantity} 
-            />
-            
-            <MahasshiSection 
-              items={mahashiItems} 
-              getItemQuantity={cart.getItemQuantity} 
-              onAdd={cart.addToCart} 
-              onUpdateQty={cart.updateQuantity} 
+            <FattaSection
+              items={byCategory('fatta')}
+              getItemQuantity={cart.getItemQuantity}
+              onAdd={cart.addToCart}
+              onUpdateQty={cart.updateQuantity}
             />
 
-            <GrapeLeafSection 
-              items={grapeLeavesItems} 
-              getItemQuantity={cart.getItemQuantity} 
-              onAdd={cart.addToCart} 
-              onUpdateQty={cart.updateQuantity} 
+            <MahasshiSection
+              items={byCategory('mahashi')}
+              getItemQuantity={cart.getItemQuantity}
+              onAdd={cart.addToCart}
+              onUpdateQty={cart.updateQuantity}
             />
+
+            <GrapeLeafSection
+              items={byCategory('grape_leaves')}
+              getItemQuantity={cart.getItemQuantity}
+              onAdd={cart.addToCart}
+              onUpdateQty={cart.updateQuantity}
+            />
+
+            <SimpleGridSection
+              id="drinks"
+              title="المشروبات"
+              items={byCategory('drinks')}
+              getItemQuantity={cart.getItemQuantity}
+              onAdd={cart.addToCart}
+              onUpdateQty={cart.updateQuantity}
+            />
+
+            <SimpleGridSection
+              id="sauces"
+              title="الصوص"
+              items={byCategory('sauces')}
+              getItemQuantity={cart.getItemQuantity}
+              onAdd={cart.addToCart}
+              onUpdateQty={cart.updateQuantity}
+            />
+
+            <RefreshingSection
+              items={byCategory('refreshing')}
+              getItemQuantity={cart.getItemQuantity}
+              onAdd={cart.addToCart}
+              onUpdateQty={cart.updateQuantity}
+            />
+
+            {!searchQuery && <InstagramSection />}
           </>
         )}
       </main>
 
-      <footer className="mt-16 py-8 text-center text-muted-foreground border-t border-border/20">
-        <p className="font-serif text-xl text-primary font-bold mb-2">دولمكس</p>
-        <p className="text-sm">جميع الأسعار بالدينار العراقي</p>
+      <footer className="mt-12 py-8 text-center border-t border-border/20 px-4">
+        <p className="font-bold text-xl text-primary mb-1">دولمكس</p>
+        <p className="text-sm text-muted-foreground">جميع الأسعار بالدينار العراقي</p>
       </footer>
 
-      <FloatingCartButton 
-        totalItems={cart.totalItems} 
-        totalPrice={cart.totalPrice} 
-        onClick={() => setIsCartOpen(true)} 
+      <FloatingCartButton
+        totalItems={cart.totalItems}
+        totalPrice={cart.totalPrice}
+        onClick={() => setIsCartOpen(true)}
       />
-      
+
       <FixedActionButtons />
-      
-      <CartDrawer 
-        open={isCartOpen} 
-        onOpenChange={setIsCartOpen} 
-        cart={cart} 
+
+      <CartDrawer
+        open={isCartOpen}
+        onOpenChange={setIsCartOpen}
+        cart={cart}
       />
     </div>
   );
@@ -171,7 +199,7 @@ function App() {
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
           <Router />
         </WouterRouter>
-        <Toaster position="top-center" dir="rtl" />
+        <Toaster position="top-center" dir="rtl" richColors />
       </TooltipProvider>
     </QueryClientProvider>
   );

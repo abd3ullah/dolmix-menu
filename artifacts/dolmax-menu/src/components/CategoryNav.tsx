@@ -6,25 +6,31 @@ interface CategoryNavProps {
 }
 
 export const categories = [
-  { id: 'all', label: 'الكل' },
-  { id: 'fatta', label: 'قسم الفتة' },
-  { id: 'mahashi', label: 'قسم المحاشي' },
-  { id: 'grape_leaves', label: 'ورق العنب' }
+  { id: 'all',        label: 'الكل'               },
+  { id: 'fatta',      label: 'الفتة'              },
+  { id: 'mahashi',    label: 'المحاشي'            },
+  { id: 'grape_leaves', label: 'ورق العنب'        },
+  { id: 'drinks',     label: 'المشروبات'          },
+  { id: 'sauces',     label: 'الصوص'              },
+  { id: 'refreshing', label: 'المشروبات المنعشة'  },
 ];
 
 export function CategoryNav({ activeCategory, onSelectCategory }: CategoryNavProps) {
   return (
-    <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-border/50 py-3 px-4">
-      <div className="max-w-md mx-auto flex gap-3 overflow-x-auto no-scrollbar pb-1" style={{ scrollbarWidth: 'none' }}>
+    <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-border/40 py-3">
+      <div
+        className="flex gap-2.5 overflow-x-auto px-4"
+        style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
+      >
         {categories.map(cat => (
           <button
             key={cat.id}
             onClick={() => onSelectCategory(cat.id)}
             className={cn(
-              "whitespace-nowrap px-5 py-2 rounded-full text-sm font-bold transition-all duration-300",
-              activeCategory === cat.id 
-                ? "bg-primary text-primary-foreground shadow-md shadow-primary/20 scale-105" 
-                : "bg-card text-muted-foreground border border-border/50 hover:bg-card/80"
+              "whitespace-nowrap px-4 py-2 rounded-full text-sm font-bold transition-all duration-200 shrink-0 active:scale-95",
+              activeCategory === cat.id
+                ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
+                : "bg-card text-muted-foreground border border-border/40 hover:border-primary/30"
             )}
           >
             {cat.label}
