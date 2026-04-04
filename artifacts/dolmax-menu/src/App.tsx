@@ -14,6 +14,7 @@ import { GrapeLeafSection } from "./components/GrapeLeafSection";
 import { SimpleGridSection } from "./components/SimpleGridSection";
 import { RefreshingSection } from "./components/RefreshingSection";
 import { InstagramSection } from "./components/InstagramSection";
+import { AboutSection } from "./components/AboutSection";
 import { CartDrawer } from "./components/CartDrawer";
 import { FloatingCartButton } from "./components/FloatingCartButton";
 import { FixedActionButtons } from "./components/FixedActionButtons";
@@ -156,6 +157,7 @@ function MenuApp() {
               onUpdateQty={cart.updateQuantity}
             />
 
+            {!searchQuery && <AboutSection />}
             {!searchQuery && <InstagramSection />}
           </>
         )}
