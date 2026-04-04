@@ -17,7 +17,7 @@ export function Header({ searchQuery, setSearchQuery }: HeaderProps) {
         </h1>
         <div className="flex items-center justify-center gap-2 mb-4">
           <div className="h-px bg-primary/30 w-12" />
-          <p className="text-primary/80 text-sm font-medium">أصالة المذاق العراقي</p>
+          <p className="text-primary/80 text-sm font-medium">أكثر من ورق عنب</p>
           <div className="h-px bg-primary/30 w-12" />
         </div>
 
