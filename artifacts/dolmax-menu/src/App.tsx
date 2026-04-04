@@ -180,15 +180,6 @@ function MenuApp() {
             </svg>
             Designed by أميرالاي ©
           </a>
-          <a
-            href="https://www.instagram.com/abdullah_sde?igsh=eTBudDFycnF3Nmd1"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-muted-foreground/35 hover:text-muted-foreground/60 transition-colors"
-            dir="rtl"
-          >
-            تم تصميمه بواسطة أميرالاي
-          </a>
         </div>
       </footer>
 
