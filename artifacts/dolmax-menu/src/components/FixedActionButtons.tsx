@@ -4,7 +4,7 @@ export function FixedActionButtons() {
   return (
     <div className="fixed bottom-24 left-4 right-4 z-40 flex justify-between pointer-events-none">
       <a 
-        href="https://wa.me/9647706101600" 
+        href="https://wa.me/9647719461693" 
         target="_blank" 
         rel="noopener noreferrer"
         className="pointer-events-auto w-12 h-12 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-lg shadow-[#25D366]/30 hover:scale-110 transition-transform"
@@ -13,7 +13,7 @@ export function FixedActionButtons() {
       </a>
       
       <a 
-        href="tel:07706101600"
+        href="tel:07719461693"
         className="pointer-events-auto w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-lg shadow-primary/30 hover:scale-110 transition-transform"
       >
         <Phone className="w-6 h-6" />

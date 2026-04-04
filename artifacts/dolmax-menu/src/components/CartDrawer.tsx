@@ -44,7 +44,7 @@ export function CartDrawer({ open, onOpenChange, cart }: CartDrawerProps) {
     }
 
     const encodedText = encodeURIComponent(orderText);
-    window.open(`https://wa.me/9647706101600?text=${encodedText}`, '_blank');
+    window.open(`https://wa.me/9647719461693?text=${encodedText}`, '_blank');
   };
 
   return (
