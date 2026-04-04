@@ -19,20 +19,20 @@ export function MahasshiSection({ items, getItemQuantity, onAdd, onUpdateQty }: 
   return (
     <section id="mahashi" className="py-6 px-4">
       <div className="max-w-md mx-auto">
-        <h2 className="text-2xl font-bold text-primary mb-6 flex items-center gap-3">
-          <span className="w-8 h-px bg-primary/50"></span>
+        <h2 className="text-2xl font-bold text-primary mb-6 flex items-center gap-3 justify-center">
+          <span className="flex-1 h-px bg-primary/30"></span>
           قسم المحاشي
-          <span className="w-8 h-px bg-primary/50"></span>
+          <span className="flex-1 h-px bg-primary/30"></span>
         </h2>
-        
+
         <div className="grid gap-6">
           {items.map(item => (
-            <MahasshiCard 
-              key={item.id} 
-              item={item} 
-              getItemQuantity={getItemQuantity} 
-              onAdd={onAdd} 
-              onUpdateQty={onUpdateQty} 
+            <MahasshiCard
+              key={item.id}
+              item={item}
+              getItemQuantity={getItemQuantity}
+              onAdd={onAdd}
+              onUpdateQty={onUpdateQty}
             />
           ))}
         </div>
@@ -41,82 +41,97 @@ export function MahasshiSection({ items, getItemQuantity, onAdd, onUpdateQty }: 
   );
 }
 
-function MahasshiCard({ 
-  item, 
-  getItemQuantity, 
-  onAdd, 
-  onUpdateQty 
-}: { 
-  item: MenuItem, 
-  getItemQuantity: (id: string) => number,
-  onAdd: any,
-  onUpdateQty: any
+function MahasshiCard({
+  item,
+  getItemQuantity,
+  onAdd,
+  onUpdateQty
+}: {
+  item: MenuItem;
+  getItemQuantity: (id: string) => number;
+  onAdd: (item: Omit<import('../hooks/useCart').CartItem, 'quantity' | 'id'>) => void;
+  onUpdateQty: (id: string, delta: number) => void;
 }) {
   const [selectedSizeId, setSelectedSizeId] = useState<string>(item.sizes?.[0]?.id || '');
   const selectedSize = item.sizes?.find(s => s.id === selectedSizeId);
-  
   const cartItemId = `${item.id}-${selectedSizeId}`;
   const qty = getItemQuantity(cartItemId);
 
   return (
-    <div className="bg-card border border-border/50 rounded-2xl p-5 shadow-lg">
-      <h3 className="font-bold text-xl text-foreground mb-2">{item.name}</h3>
-      {item.description && (
-        <p className="text-muted-foreground text-sm mb-4 leading-relaxed bg-background/50 p-2 rounded-lg border border-border/30">
-          {item.description}
-        </p>
-      )}
+    <div className="bg-card border border-border/40 rounded-2xl overflow-hidden shadow-lg">
+      <div className="relative w-full" style={{ paddingBottom: '55%' }}>
+        <img
+          src={item.image}
+          alt={item.name}
+          className="absolute inset-0 w-full h-full object-cover"
+          onError={(e) => {
+            const t = e.currentTarget;
+            t.onerror = null;
+            t.src = `https://placehold.co/600x330/1a3a22/c9a84c?text=${encodeURIComponent(item.name)}`;
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+        <div className="absolute bottom-0 right-0 left-0 p-4">
+          <h3 className="font-bold text-xl text-white leading-tight drop-shadow">{item.name}</h3>
+          {item.description && (
+            <p className="text-white/75 text-xs mt-0.5">{item.description}</p>
+          )}
+        </div>
+      </div>
 
-      <div className="mb-5">
-        <label className="text-sm font-semibold text-primary mb-2 block">اختر الحجم:</label>
-        <div className="flex flex-wrap gap-2">
+      <div className="p-4">
+        <p className="text-xs font-semibold text-primary mb-2">اختر الحجم:</p>
+        <div className="flex flex-wrap gap-2 mb-4">
           {item.sizes?.map(size => (
             <button
               key={size.id}
               onClick={() => setSelectedSizeId(size.id)}
               className={cn(
-                "px-4 py-2 rounded-xl text-sm font-bold border transition-all",
+                "px-3 py-1.5 rounded-xl text-xs font-bold border transition-all duration-200 active:scale-95",
                 selectedSizeId === size.id
                   ? "bg-primary text-primary-foreground border-primary shadow-sm"
-                  : "bg-background text-foreground border-border hover:border-primary/50"
+                  : "bg-background text-foreground border-border/50 hover:border-primary/50"
               )}
             >
-              {size.label} <span className="opacity-70 text-xs mr-1">({size.pieces} حبة)</span>
+              {size.label}
+              <span className={cn("mr-1 opacity-70", selectedSizeId === size.id ? "opacity-90" : "")}>
+                ({size.pieces} ح)
+              </span>
             </button>
           ))}
         </div>
-      </div>
 
-      <div className="flex justify-between items-center mt-4 pt-4 border-t border-border/50">
-        <div>
-          <div className="text-xs text-muted-foreground mb-1">السعر للحجم المختار</div>
-          <p className="text-xl text-primary font-bold">{formatPrice(selectedSize?.price || 0)}</p>
-        </div>
-        
-        <div>
+        <div className="flex justify-between items-center pt-3 border-t border-border/30">
+          <div>
+            <p className="text-xs text-muted-foreground mb-0.5">السعر</p>
+            <p className="text-xl font-bold text-primary">{formatPrice(selectedSize?.price || 0)}</p>
+          </div>
+
           {qty > 0 ? (
             <div className="flex items-center gap-3 bg-background rounded-full p-1 border border-primary/20">
-              <button 
+              <button
                 onClick={() => {
                   onUpdateQty(cartItemId, -1);
                   if (qty === 1) toast.success('تم حذف الصنف من السلة');
+                  else toast.success('تم تحديث الكمية');
                 }}
-                className="w-10 h-10 rounded-full bg-card flex items-center justify-center text-foreground hover:bg-muted"
+                className="w-10 h-10 rounded-full bg-card flex items-center justify-center text-foreground hover:bg-muted transition-colors"
               >
                 <Minus className="w-5 h-5" />
               </button>
               <span className="font-bold w-6 text-center text-lg">{qty}</span>
-              <button 
+              <button
                 onClick={() => {
                   onUpdateQty(cartItemId, 1);
+                  toast.success('تم تحديث الكمية');
                 }}
-                className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/90"
+                className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/90 transition-colors"
               >
                 <Plus className="w-5 h-5" />
               </button>
             </div>
           ) : (
-            <Button 
+            <Button
               onClick={() => {
                 if (!selectedSize) return;
                 onAdd({
@@ -129,7 +144,7 @@ function MahasshiCard({
                 });
                 toast.success('تمت إضافة الصنف إلى السلة');
               }}
-              className="rounded-full px-8 h-12 font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-md shadow-primary/20 text-lg"
+              className="rounded-full px-8 h-12 font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-md shadow-primary/20 text-base transition-all active:scale-95"
             >
               إضافة
             </Button>

@@ -1,0 +1,62 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "Gfq0SKVcAl4AInZzFOE__"
+uri = "file://artifacts/dolmax-menu/public/images/fatta-warq-enab.png"
+type = "image"
+title = "fatta-grape-leaves-dish"
+
+[[generated]]
+id = "K2sgXfHkudpQkWsaZzQsW"
+uri = "file://artifacts/dolmax-menu/public/images/fatta-jibis.png"
+type = "image"
+title = "fatta-chips-dish"
+
+[[generated]]
+id = "zV1aQr-ChhJHA8rtleqHn"
+uri = "file://artifacts/dolmax-menu/public/images/fatta-baqlawa.png"
+type = "image"
+title = "fatta-fava-beans-dish"
+
+[[generated]]
+id = "i6m_mYD3KAIybjnqfQgWS"
+uri = "file://artifacts/dolmax-menu/public/images/fatta-indomie.png"
+type = "image"
+title = "fatta-noodles-dish"
+
+[[generated]]
+id = "yCmN7KdNcmQiUbawgLMnx"
+uri = "file://artifacts/dolmax-menu/public/images/fatta-texas.png"
+type = "image"
+title = "fatta-texas-style"
+
+[[generated]]
+id = "HyZe_6SdP9Rg2AMwst2ZJ"
+uri = "file://artifacts/dolmax-menu/public/images/fatta-bbq.png"
+type = "image"
+title = "fatta-bbq-dish"
+
+[[generated]]
+id = "316CEzqgUH1r8gAXzVKz1"
+uri = "file://artifacts/dolmax-menu/public/images/fatta-spicy.png"
+type = "image"
+title = "fatta-spicy-red"
+
+[[generated]]
+id = "yPM0XuR6kQHwjOxe8tmUs"
+uri = "file://artifacts/dolmax-menu/public/images/mahashi-lemon.png"
+type = "image"
+title = "mahashi-lemon-no-meat"
+
+[[generated]]
+id = "pUx_dUqrcr73-xMp3I27o"
+uri = "file://artifacts/dolmax-menu/public/images/mahashi-pomegranate.png"
+type = "image"
+title = "mahashi-pomegranate-meat"
+
+[[generated]]
+id = "WYumXSuIF29TsRT-JCsKY"
+uri = "file://artifacts/dolmax-menu/public/images/grape-leaves-lemon.png"
+type = "image"
+title = "grape-leaves-lemon"
