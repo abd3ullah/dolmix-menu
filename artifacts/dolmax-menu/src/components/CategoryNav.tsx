@@ -6,13 +6,14 @@ interface CategoryNavProps {
 }
 
 export const categories = [
-  { id: 'all',        label: 'الكل'               },
-  { id: 'fatta',      label: 'الفتة'              },
-  { id: 'mahashi',    label: 'المحاشي'            },
-  { id: 'grape_leaves', label: 'ورق العنب'        },
-  { id: 'drinks',     label: 'المشروبات'          },
-  { id: 'sauces',     label: 'الصوص'              },
-  { id: 'refreshing', label: 'المشروبات المنعشة'  },
+  { id: 'all',          label: 'الكل'               },
+  { id: 'fatta',        label: 'الفتة'              },
+  { id: 'mahashi',      label: 'المحاشي'            },
+  { id: 'grape_leaves', label: 'ورق العنب'          },
+  { id: 'pilav',        label: 'پيلاو'              },
+  { id: 'drinks',       label: 'المشروبات'          },
+  { id: 'sauces',       label: 'الصوص'              },
+  { id: 'refreshing',   label: 'المشروبات المنعشة'  },
 ];
 
 export function CategoryNav({ activeCategory, onSelectCategory }: CategoryNavProps) {

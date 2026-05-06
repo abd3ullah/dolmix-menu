@@ -11,10 +11,11 @@ import { FeaturedSection } from "./components/FeaturedSection";
 import { FattaSection } from "./components/FattaSection";
 import { MahasshiSection } from "./components/MahasshiSection";
 import { GrapeLeafSection } from "./components/GrapeLeafSection";
+import { PilavSection } from "./components/PilavSection";
 import { SimpleGridSection } from "./components/SimpleGridSection";
 import { RefreshingSection } from "./components/RefreshingSection";
-import { InstagramSection } from "./components/InstagramSection";
 import { AboutSection } from "./components/AboutSection";
+import { InstagramSection } from "./components/InstagramSection";
 import { CartDrawer } from "./components/CartDrawer";
 import { FloatingCartButton } from "./components/FloatingCartButton";
 import { FixedActionButtons } from "./components/FixedActionButtons";
@@ -24,7 +25,7 @@ import { useCart } from "./hooks/useCart";
 
 const queryClient = new QueryClient();
 
-const SECTION_IDS = ['fatta', 'mahashi', 'grape_leaves', 'drinks', 'sauces', 'refreshing'];
+const SECTION_IDS = ['fatta', 'mahashi', 'grape_leaves', 'pilav', 'drinks', 'sauces', 'refreshing'];
 
 function MenuApp() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -127,6 +128,13 @@ function MenuApp() {
 
             <GrapeLeafSection
               items={byCategory('grape_leaves')}
+              getItemQuantity={cart.getItemQuantity}
+              onAdd={cart.addToCart}
+              onUpdateQty={cart.updateQuantity}
+            />
+
+            <PilavSection
+              items={byCategory('pilav')}
               getItemQuantity={cart.getItemQuantity}
               onAdd={cart.addToCart}
               onUpdateQty={cart.updateQuantity}

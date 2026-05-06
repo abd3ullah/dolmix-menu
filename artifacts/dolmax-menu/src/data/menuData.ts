@@ -5,7 +5,7 @@ export type SizeOption = {
   price: number;
 };
 
-export type MenuCategory = 'fatta' | 'mahashi' | 'grape_leaves' | 'drinks' | 'sauces' | 'refreshing';
+export type MenuCategory = 'fatta' | 'mahashi' | 'grape_leaves' | 'drinks' | 'sauces' | 'refreshing' | 'pilav';
 
 export type MenuItem = {
   id: string;
@@ -13,6 +13,7 @@ export type MenuItem = {
   description?: string;
   price?: number;
   sizes?: SizeOption[];
+  pieceOptions?: string[];
   category: MenuCategory;
   image: string;
 };
@@ -34,9 +35,10 @@ export const menuData: MenuItem[] = [
   {
     id: 'm1',
     name: 'مشكل ليمون بدون لحم',
-    description: 'الحبات اختياري: ورق عنب، بصل، شجر',
+    description: 'الحبات اختياري: ورق عنب، بصل، شجر، لهانة، بطاطا',
     category: 'mahashi',
     image: img('mahashi-lemon.png'),
+    pieceOptions: ['ورق عنب', 'بصل', 'شجر', 'لهانة', 'بطاطا'],
     sizes: [
       { id: 's_m',      label: 'M',               pieces: 7,  price: 3000  },
       { id: 's_l',      label: 'L',               pieces: 20, price: 8000  },
@@ -49,9 +51,10 @@ export const menuData: MenuItem[] = [
   {
     id: 'm2',
     name: 'مشكل دبس الرمان مع لحم',
-    description: 'الحبات اختياري: ورق عنب، بصل، شجر، بطاطا، فلفل، باذنجان',
+    description: 'الحبات اختياري: ورق عنب، بصل، شجر، بطاطا، فلفل، باذنجان، لهانة',
     category: 'mahashi',
     image: img('mahashi-pomegranate.png'),
+    pieceOptions: ['ورق عنب', 'بصل', 'شجر', 'بطاطا', 'فلفل', 'باذنجان', 'لهانة'],
     sizes: [
       { id: 's_m',      label: 'M',               pieces: 7,  price: 4000  },
       { id: 's_l',      label: 'L',               pieces: 20, price: 9750  },
@@ -60,6 +63,22 @@ export const menuData: MenuItem[] = [
       { id: 's_dolmax', label: 'طبق DOLMIX',       pieces: 14, price: 6750  },
       { id: 's_party',  label: 'صينية الضيافة',   pieces: 70, price: 33750 },
     ]
+  },
+  {
+    id: 'm3',
+    name: 'دولمة سلك بدون لحم',
+    description: 'حجم وسط',
+    price: 16000,
+    category: 'mahashi',
+    image: img('mahashi-dolma-no-meat.png'),
+  },
+  {
+    id: 'm4',
+    name: 'دولمة سلك باللحم',
+    description: 'حجم وسط',
+    price: 22000,
+    category: 'mahashi',
+    image: img('mahashi-dolma-meat.png'),
   },
 
   // ─── ورق العنب ────────────────────────────────────────────────────────────
@@ -102,6 +121,22 @@ export const menuData: MenuItem[] = [
       { id: 's_dolmax', label: 'طبق DOLMIX',  pieces: 14, price: 5000  },
     ]
   },
+  {
+    id: 'g4',
+    name: 'دولمة ورق عنب بدون لحم',
+    description: 'حجم وسط',
+    price: 16000,
+    category: 'grape_leaves',
+    image: img('grape-dolma-no-meat.png'),
+  },
+  {
+    id: 'g5',
+    name: 'دولمة ورق عنب باللحم',
+    description: 'حجم وسط',
+    price: 22000,
+    category: 'grape_leaves',
+    image: img('grape-dolma-meat.png'),
+  },
 
   // ─── المشروبات ────────────────────────────────────────────────────────────
   { id: 'd1', name: 'بيبسي',  price: 500, category: 'drinks', image: img('drink-pepsi.png')  },
@@ -112,7 +147,7 @@ export const menuData: MenuItem[] = [
   { id: 'd6', name: 'ماء',    price: 500, category: 'drinks', image: img('drink-water.png')  },
 
   // ─── الصوص ────────────────────────────────────────────────────────────────
-  { id: 's1', name: 'صوص DOLMIX',  price: 500, category: 'sauces', image: img('sauce-dolmax.png') },
+  { id: 's1', name: 'صوص DOLMIX',   price: 500, category: 'sauces', image: img('sauce-dolmax.png') },
   { id: 's2', name: 'صوص سبايسي',  price: 500, category: 'sauces', image: img('sauce-spicy.png')  },
   { id: 's3', name: 'صوص تكساس',   price: 500, category: 'sauces', image: img('sauce-texas.png')  },
   { id: 's4', name: 'صوص باربيكيو', price: 500, category: 'sauces', image: img('sauce-bbq.png')   },
@@ -123,4 +158,9 @@ export const menuData: MenuItem[] = [
   { id: 'r3', name: 'موهيتو باري',          price: 5000, category: 'refreshing', image: img('mojito-berry.png')       },
   { id: 'r4', name: 'موهيتو بلوبيري',       price: 3500, category: 'refreshing', image: img('mojito-blueberry.png')   },
   { id: 'r5', name: 'آيس كوفي',             price: 2500, category: 'refreshing', image: img('ice-coffee.png')         },
+
+  // ─── پيلاو ────────────────────────────────────────────────────────────────
+  { id: 'p1', name: 'پيلاو تركي كلاسك',  price: 4500, description: 'المكونات: ارز تركي، حمص، دجاج', category: 'pilav', image: img('pilav-classic.png')  },
+  { id: 'p2', name: 'پيلاو تركي كتشاب',  price: 4500, description: 'المكونات: ارز تركي، حمص، دجاج', category: 'pilav', image: img('pilav-ketchup.png')  },
+  { id: 'p3', name: 'پيلاو تركي تكساس',  price: 5000, description: 'المكونات: ارز تركي، حمص، دجاج', category: 'pilav', image: img('pilav-texas.png')   },
 ];

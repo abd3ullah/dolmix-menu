@@ -1,12 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 
 export type CartItem = {
-  id: string; // unique cart item id (e.g. m1-s_m)
-  itemId: string; // id from menuData
+  id: string;
+  itemId: string;
   name: string;
   category: string;
   selectedSize?: string;
   pieces?: number;
+  selectedPieces?: string;
   unitPrice: number;
   quantity: number;
 };
@@ -30,22 +31,22 @@ export function useCart() {
       const id = item.selectedSize ? `${item.itemId}-${item.selectedSize}` : item.itemId;
       const existing = prev.find(i => i.id === id);
       if (existing) {
-        return prev.map(i => i.id === id ? { ...i, quantity: i.quantity + 1 } : i);
+        return prev.map(i => i.id === id ? { ...i, quantity: i.quantity + 1, selectedPieces: item.selectedPieces ?? i.selectedPieces } : i);
       }
       return [...prev, { ...item, id, quantity: 1 }];
     });
   }, []);
 
   const updateQuantity = useCallback((id: string, delta: number) => {
-    setItems(prev => {
-      return prev.map(item => {
+    setItems(prev =>
+      prev.map(item => {
         if (item.id === id) {
           const newQty = item.quantity + delta;
           return { ...item, quantity: Math.max(0, newQty) };
         }
         return item;
-      }).filter(item => item.quantity > 0);
-    });
+      }).filter(item => item.quantity > 0)
+    );
   }, []);
 
   const removeFromCart = useCallback((id: string) => {

@@ -87,16 +87,17 @@ export function CartDrawer({ open, onOpenChange, cart }: CartDrawerProps) {
 
     items.forEach((item, index) => {
       orderText += `${index + 1}. ${item.name} × ${item.quantity} = ${formatPrice(item.unitPrice * item.quantity)}\n`;
+      if (item.selectedPieces) {
+        orderText += `   الحبات: ${item.selectedPieces}\n`;
+      }
     });
 
     orderText += `\nالمجموع الكلي: ${formatPrice(totalPrice)}\n`;
 
     if (hasAutoLocation && locationData) {
-      orderText += `\n📍 الموقع:\n`;
-      orderText += `${locationData.mapsUrl}\n`;
+      orderText += `\n📍 الموقع:\n${locationData.mapsUrl}\n`;
     } else if (hasManualLocation) {
-      orderText += `\n📍 الموقع:\n`;
-      orderText += `${manualLocation.trim()}\n`;
+      orderText += `\n📍 الموقع:\n${manualLocation.trim()}\n`;
     }
 
     if (notes) {
@@ -137,7 +138,10 @@ export function CartDrawer({ open, onOpenChange, cart }: CartDrawerProps) {
               {items.map(item => (
                 <div key={item.id} className="bg-card p-3 rounded-xl border border-border/50 flex gap-3 shadow-sm">
                   <div className="flex-1">
-                    <h4 className="font-bold text-foreground mb-1">{item.name}</h4>
+                    <h4 className="font-bold text-foreground mb-0.5">{item.name}</h4>
+                    {item.selectedPieces && (
+                      <p className="text-xs text-muted-foreground mb-1">الحبات: {item.selectedPieces}</p>
+                    )}
                     <p className="text-primary font-semibold">{formatPrice(item.unitPrice)}</p>
                   </div>
 
@@ -196,7 +200,6 @@ export function CartDrawer({ open, onOpenChange, cart }: CartDrawerProps) {
                     </div>
 
                     <div className="p-3 space-y-3">
-                      {/* Auto-detect button */}
                       <button
                         onClick={handleFetchLocation}
                         disabled={locationState === 'loading'}
@@ -214,42 +217,26 @@ export function CartDrawer({ open, onOpenChange, cart }: CartDrawerProps) {
                         }}
                       >
                         {locationState === 'loading' ? (
-                          <>
-                            <Loader2 className="w-4 h-4 animate-spin" />
-                            جاري تحديد الموقع...
-                          </>
+                          <><Loader2 className="w-4 h-4 animate-spin" />جاري تحديد الموقع...</>
                         ) : locationState === 'success' ? (
-                          <>
-                            <CheckCircle2 className="w-4 h-4" />
-                            تم تحديد الموقع — اضغط لتحديثه
-                          </>
+                          <><CheckCircle2 className="w-4 h-4" />تم تحديد الموقع — اضغط لتحديثه</>
                         ) : (
-                          <>
-                            <Navigation className="w-4 h-4" />
-                            جلب موقعي تلقائياً
-                          </>
+                          <><Navigation className="w-4 h-4" />جلب موقعي تلقائياً</>
                         )}
                       </button>
 
-                      {/* Success: show map link */}
                       {locationState === 'success' && locationData && (
                         <div className="rounded-lg bg-green-950/30 border border-green-800/30 p-3 flex items-start gap-2">
                           <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0 mt-0.5" />
                           <div className="flex-1 min-w-0">
                             <p className="text-xs text-green-400 mb-1">تم تحديد موقعك بنجاح</p>
-                            <a
-                              href={locationData.mapsUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-xs text-primary underline break-all"
-                            >
+                            <a href={locationData.mapsUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-primary underline break-all">
                               عرض على خرائط جوجل ↗
                             </a>
                           </div>
                         </div>
                       )}
 
-                      {/* Error: show message + manual input */}
                       {locationState === 'error' && (
                         <div className="rounded-lg bg-red-950/30 border border-red-800/30 p-3 flex items-start gap-2">
                           <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
@@ -257,7 +244,6 @@ export function CartDrawer({ open, onOpenChange, cart }: CartDrawerProps) {
                         </div>
                       )}
 
-                      {/* Manual fallback — shown on error or idle */}
                       {(locationState === 'error' || locationState === 'idle') && (
                         <Input
                           placeholder="أو أدخل موقعك يدوياً (مثال: بغداد، الكرادة)"
@@ -288,7 +274,6 @@ export function CartDrawer({ open, onOpenChange, cart }: CartDrawerProps) {
               <span className="font-bold text-lg">المجموع الكلي:</span>
               <span className="font-bold text-2xl text-primary">{formatPrice(totalPrice)}</span>
             </div>
-
             <Button
               onClick={handleCheckout}
               className="w-full h-14 text-lg font-bold bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-xl shadow-lg shadow-[#25D366]/20"
