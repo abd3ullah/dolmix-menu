@@ -131,18 +131,22 @@ export const menuData: MenuItem[] = [
   {
     id: 'g4',
     name: 'دولمة ورق عنب بدون لحم',
-    description: 'حجم وسط',
-    price: 16000,
     category: 'grape_leaves',
     image: img('grape-dolma.jpg'),
+    sizes: [
+      { id: 's_med',   label: 'حجم وسط',  pieces: 0, price: 12000 },
+      { id: 's_large', label: 'حجم كبير', pieces: 0, price: 16000 },
+    ],
   },
   {
     id: 'g5',
     name: 'دولمة ورق عنب باللحم',
-    description: 'حجم وسط',
-    price: 22000,
     category: 'grape_leaves',
     image: img('grape-dolma.jpg'),
+    sizes: [
+      { id: 's_med',   label: 'حجم وسط',  pieces: 0, price: 18000 },
+      { id: 's_large', label: 'حجم كبير', pieces: 0, price: 22000 },
+    ],
   },
 
   // ─── المشروبات ────────────────────────────────────────────────────────────

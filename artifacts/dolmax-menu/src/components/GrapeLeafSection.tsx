@@ -104,9 +104,11 @@ function GrapeLeafSizedCard({
               )}
             >
               {size.label}
-              <span className={cn("mr-1 opacity-70", selectedSizeId === size.id ? "opacity-90" : "")}>
+              {size.pieces > 0 && (
+                <span className={cn("mr-1 opacity-70", selectedSizeId === size.id ? "opacity-90" : "")}>
 ({size.pieces} حبة)
-              </span>
+                </span>
+              )}
             </button>
           ))}
         </div>
