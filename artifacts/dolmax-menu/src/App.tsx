@@ -35,6 +35,7 @@ const SECTION_IDS = [
   "drinks",
   "sauces",
   "refreshing",
+  "about",
 ];
 
 function MenuApp() {

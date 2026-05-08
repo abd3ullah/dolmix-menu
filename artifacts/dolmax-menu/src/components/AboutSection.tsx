@@ -2,7 +2,7 @@ import { MapPin, ExternalLink } from 'lucide-react';
 
 export function AboutSection() {
   return (
-    <section className="py-8 px-4">
+    <section id="about" className="py-8 px-4 scroll-mt-24">
       <div className="max-w-md mx-auto">
         <div className="relative rounded-3xl overflow-hidden border border-primary/30 shadow-xl bg-card">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-transparent to-primary/5 pointer-events-none" />

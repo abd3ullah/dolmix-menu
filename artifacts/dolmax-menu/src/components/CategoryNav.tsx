@@ -15,6 +15,7 @@ export const categories = [
   { id: 'drinks',       label: 'المشروبات'          },
   { id: 'sauces',       label: 'الصوص'              },
   { id: 'refreshing',   label: 'المشروبات المنعشة'  },
+  { id: 'about',        label: 'موقعنا'             },
 ];
 
 export function CategoryNav({ activeCategory, onSelectCategory }: CategoryNavProps) {
