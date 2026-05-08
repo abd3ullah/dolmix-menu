@@ -66,14 +66,17 @@ function MahasshiSizedCard({
 }) {
   const [selectedSizeId, setSelectedSizeId] = useState<string>(item.sizes?.[0]?.id || '');
   const [selectedPieces, setSelectedPieces] = useState<string[]>([]);
+  const [showPieceWarning, setShowPieceWarning] = useState(false);
   const selectedSize = item.sizes?.find(s => s.id === selectedSizeId);
   const cartItemId = `${item.id}-${selectedSizeId}`;
   const qty = getItemQuantity(cartItemId);
+  const requiresPiece = !!(item.pieceOptions && item.pieceOptions.length > 0);
 
   const togglePiece = (piece: string) => {
     setSelectedPieces(prev =>
       prev.includes(piece) ? prev.filter(p => p !== piece) : [...prev, piece]
     );
+    setShowPieceWarning(false);
   };
 
   return (
@@ -122,13 +125,18 @@ function MahasshiSizedCard({
         </div>
 
         {/* Piece type selector — only for items that have pieceOptions */}
-        {item.pieceOptions && item.pieceOptions.length > 0 && (
-          <div className="mb-4">
+        {requiresPiece && (
+          <div
+            className={cn(
+              "mb-4 rounded-xl transition-all duration-300",
+              showPieceWarning && "ring-2 ring-red-400/70 ring-offset-2 ring-offset-card p-2 -m-2 animate-pulse"
+            )}
+          >
             <p className="text-xs font-semibold text-primary mb-2">
-              اختياري — نوع الحبات:
+              نوع الحبات:
             </p>
             <div className="flex flex-wrap gap-1.5">
-              {item.pieceOptions.map(piece => (
+              {item.pieceOptions!.map(piece => (
                 <button
                   key={piece}
                   onClick={() => togglePiece(piece)}
@@ -143,6 +151,12 @@ function MahasshiSizedCard({
                 </button>
               ))}
             </div>
+            {showPieceWarning && (
+              <p className="mt-2 text-xs font-bold text-red-400 flex items-center gap-1.5">
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-400" />
+                اختر نوع الحبات أولاً
+              </p>
+            )}
           </div>
         )}
 
@@ -189,6 +203,11 @@ function MahasshiSizedCard({
             <Button
               onClick={() => {
                 if (!selectedSize) return;
+                if (requiresPiece && selectedPieces.length === 0) {
+                  setShowPieceWarning(true);
+                  toast.error('اختر نوع الحبات أولاً');
+                  return;
+                }
                 onAdd({
                   itemId: item.id,
                   name: `${item.name} - ${selectedSize.label}`,
