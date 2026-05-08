@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetClose } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Minus, Plus, Trash2, ShoppingBag, MapPin, Loader2, CheckCircle2, AlertCircle, Navigation } from 'lucide-react';
+import { Minus, Plus, Trash2, ShoppingBag, MapPin, Loader2, CheckCircle2, AlertCircle, Navigation, X } from 'lucide-react';
 import { useCart } from '../hooks/useCart';
 import { formatPrice } from '../lib/format';
 import { toast } from 'sonner';
@@ -110,19 +110,37 @@ export function CartDrawer({ open, onOpenChange, cart }: CartDrawerProps) {
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85dvh] sm:h-auto sm:max-h-[90dvh] rounded-t-3xl bg-background border-border p-0 flex flex-col">
-        <SheetHeader className="p-4 border-b border-border/50 text-right">
-          <SheetTitle className="text-2xl font-bold text-primary flex items-center gap-2 justify-between">
-            <div className="flex items-center gap-2">
-              <ShoppingBag className="w-6 h-6" />
+      <SheetContent side="bottom" className="h-[85dvh] sm:h-auto sm:max-h-[90dvh] rounded-t-3xl bg-background border-border p-0 flex flex-col [&>button.absolute]:hidden">
+        <SheetHeader className="px-4 py-3 border-b border-border/50">
+          <div className="relative flex items-center justify-between min-h-[44px]">
+            {/* Close button (start side in RTL = visually right) */}
+            <SheetClose
+              aria-label="إغلاق"
+              className="relative z-10 inline-flex items-center justify-center w-11 h-11 rounded-full bg-card text-foreground border border-border/60 shadow-sm hover:bg-muted active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-primary/40"
+            >
+              <X className="w-5 h-5" />
+            </SheetClose>
+
+            {/* Centered title */}
+            <SheetTitle className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 m-0 text-xl sm:text-2xl font-bold text-primary flex items-center gap-2 whitespace-nowrap">
+              <ShoppingBag className="w-5 h-5 sm:w-6 sm:h-6" />
               سلة الطلبات
-            </div>
-            {items.length > 0 && (
-              <Button variant="ghost" size="sm" onClick={clearCart} className="text-destructive hover:text-destructive hover:bg-destructive/10">
-                تفريغ السلة
-              </Button>
+            </SheetTitle>
+
+            {/* Clear cart button (end side in RTL = visually left) */}
+            {items.length > 0 ? (
+              <button
+                onClick={clearCart}
+                aria-label="تفريغ السلة"
+                className="relative z-10 inline-flex items-center gap-1.5 h-11 px-3 rounded-full bg-destructive/15 text-destructive border border-destructive/40 font-bold text-xs sm:text-sm shadow-sm hover:bg-destructive/25 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-destructive/40"
+              >
+                <Trash2 className="w-4 h-4" />
+                <span>تفريغ السلة</span>
+              </button>
+            ) : (
+              <span className="w-11 h-11" aria-hidden="true" />
             )}
-          </SheetTitle>
+          </div>
           <SheetDescription className="hidden">سلة طلبات DOLMIX</SheetDescription>
         </SheetHeader>
 
