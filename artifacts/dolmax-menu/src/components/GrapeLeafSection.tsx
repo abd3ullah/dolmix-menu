@@ -70,7 +70,7 @@ function GrapeLeafSizedCard({
   const qty = getItemQuantity(cartItemId);
 
   return (
-    <div className="bg-card border border-border/40 rounded-2xl overflow-hidden shadow-lg">
+    <div data-item-id={item.id} className="bg-card border border-border/40 rounded-2xl overflow-hidden shadow-lg transition-shadow">
       <div className="relative w-full" style={{ paddingBottom: '55%' }}>
         <img
           src={item.image}
@@ -180,7 +180,7 @@ function GrapeLeafFixedCard({
   const qty = getItemQuantity(item.id);
 
   return (
-    <div className="bg-card border border-border/40 rounded-2xl overflow-hidden shadow-lg">
+    <div data-item-id={item.id} className="bg-card border border-border/40 rounded-2xl overflow-hidden shadow-lg transition-shadow">
       <div className="relative w-full" style={{ paddingBottom: '55%' }}>
         <img
           src={item.image}
