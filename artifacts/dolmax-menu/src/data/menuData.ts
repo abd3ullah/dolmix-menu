@@ -23,12 +23,12 @@ const img = (name: string) => `${BASE}/images/${name}`;
 
 export const menuData: MenuItem[] = [
   // ─── الفتة ────────────────────────────────────────────────────────────────
-  { id: 'f1', name: 'فتة ورق عنب',  price: 4500, category: 'fatta', image: img('fatta-warq-enab.png') },
-  { id: 'f2', name: 'فتة الجبس',    price: 4500, category: 'fatta', image: img('fatta-jibis.png') },
-  { id: 'f3', name: 'فتة الباقلاء', price: 4500, category: 'fatta', image: img('fatta-baqlawa.png') },
-  { id: 'f4', name: 'فتة اندومي',   price: 4500, category: 'fatta', image: img('fatta-indomie.png') },
-  { id: 'f5', name: 'فتة تكساس',    price: 4500, category: 'fatta', image: img('fatta-texas.png') },
-  { id: 'f6', name: 'فتة باريكيو',  price: 4500, category: 'fatta', image: img('fatta-bbq.png') },
+  { id: 'f1', name: 'فتة ورق عنب',  price: 4500, category: 'fatta', image: img('fatta-warq-enab.jpg') },
+  { id: 'f2', name: 'فتة الجبس',    price: 4500, category: 'fatta', image: img('fatta-jibis.jpg') },
+  { id: 'f3', name: 'فتة الباقلاء', price: 4500, category: 'fatta', image: img('fatta-baqlawa.jpg') },
+  { id: 'f4', name: 'فتة اندومي',   price: 4500, category: 'fatta', image: img('fatta-indomie.jpg') },
+  { id: 'f5', name: 'فتة تكساس',    price: 4500, category: 'fatta', image: img('fatta-texas.jpg') },
+  { id: 'f6', name: 'فتة باريكيو',  price: 4500, category: 'fatta', image: img('fatta-bbq.jpg') },
   { id: 'f7', name: 'فتة سبايسي',   price: 4500, category: 'fatta', image: img('fatta-spicy.jpg') },
 
   // ─── المحاشي ──────────────────────────────────────────────────────────────
