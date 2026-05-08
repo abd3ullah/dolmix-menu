@@ -23,13 +23,13 @@ const img = (name: string) => `${BASE}/images/${name}`;
 
 export const menuData: MenuItem[] = [
   // ─── الفتة ────────────────────────────────────────────────────────────────
-  { id: 'f1', name: 'فتة ورق عنب',  price: 3500, category: 'fatta', image: img('fatta-warq-enab.png') },
-  { id: 'f2', name: 'فتة الجبس',    price: 3500, category: 'fatta', image: img('fatta-jibis.png') },
-  { id: 'f3', name: 'فتة الباقلاء', price: 5000, category: 'fatta', image: img('fatta-baqlawa.png') },
-  { id: 'f4', name: 'فتة اندومي',   price: 3500, category: 'fatta', image: img('fatta-indomie.png') },
+  { id: 'f1', name: 'فتة ورق عنب',  price: 4500, category: 'fatta', image: img('fatta-warq-enab.png') },
+  { id: 'f2', name: 'فتة الجبس',    price: 4500, category: 'fatta', image: img('fatta-jibis.png') },
+  { id: 'f3', name: 'فتة الباقلاء', price: 4500, category: 'fatta', image: img('fatta-baqlawa.png') },
+  { id: 'f4', name: 'فتة اندومي',   price: 4500, category: 'fatta', image: img('fatta-indomie.png') },
   { id: 'f5', name: 'فتة تكساس',    price: 4500, category: 'fatta', image: img('fatta-texas.png') },
   { id: 'f6', name: 'فتة باريكيو',  price: 4500, category: 'fatta', image: img('fatta-bbq.png') },
-  { id: 'f7', name: 'فتة سبايسي',   price: 3500, category: 'fatta', image: img('fatta-spicy.png') },
+  { id: 'f7', name: 'فتة سبايسي',   price: 4500, category: 'fatta', image: img('fatta-spicy.png') },
 
   // ─── المحاشي ──────────────────────────────────────────────────────────────
   {
@@ -155,7 +155,7 @@ export const menuData: MenuItem[] = [
   // ─── المشروبات المنعشة ────────────────────────────────────────────────────
   { id: 'r1', name: 'موهيتو ليمون ونعناع', price: 3750, category: 'refreshing', image: img('mojito-lemon-mint.png')  },
   { id: 'r2', name: 'موهيتو رمان',          price: 3500, category: 'refreshing', image: img('mojito-pomegranate.png') },
-  { id: 'r3', name: 'موهيتو باري',          price: 5000, category: 'refreshing', image: img('mojito-berry.png')       },
+  { id: 'r3', name: 'موهيتو باربي',         price: 5000, category: 'refreshing', image: img('mojito-berry.png')       },
   { id: 'r4', name: 'موهيتو بلوبيري',       price: 3500, category: 'refreshing', image: img('mojito-blueberry.png')   },
   { id: 'r5', name: 'آيس كوفي',             price: 2500, category: 'refreshing', image: img('ice-coffee.png')         },
 

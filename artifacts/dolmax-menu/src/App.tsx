@@ -25,7 +25,15 @@ import { useCart } from "./hooks/useCart";
 
 const queryClient = new QueryClient();
 
-const SECTION_IDS = ['fatta', 'mahashi', 'grape_leaves', 'pilav', 'drinks', 'sauces', 'refreshing'];
+const SECTION_IDS = [
+  "fatta",
+  "mahashi",
+  "grape_leaves",
+  "pilav",
+  "drinks",
+  "sauces",
+  "refreshing",
+];
 
 function MenuApp() {
   const [searchQuery, setSearchQuery] = useState('');
