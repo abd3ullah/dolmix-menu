@@ -14,6 +14,7 @@ export type MenuItem = {
   price?: number;
   sizes?: SizeOption[];
   pieceOptions?: string[];
+  requiresSize?: boolean;
   category: MenuCategory;
   image: string;
 };
@@ -69,6 +70,7 @@ export const menuData: MenuItem[] = [
     name: 'دولمة سلك بدون لحم',
     category: 'mahashi',
     image: img('mahashi-dolma.jpg'),
+    requiresSize: true,
     sizes: [
       { id: 's_med',   label: 'حجم وسط',  pieces: 0, price: 12000 },
       { id: 's_large', label: 'حجم كبير', pieces: 0, price: 16000 },
@@ -79,6 +81,7 @@ export const menuData: MenuItem[] = [
     name: 'دولمة سلك باللحم',
     category: 'mahashi',
     image: img('mahashi-dolma.jpg'),
+    requiresSize: true,
     sizes: [
       { id: 's_med',   label: 'حجم وسط',  pieces: 0, price: 18000 },
       { id: 's_large', label: 'حجم كبير', pieces: 0, price: 22000 },
@@ -133,6 +136,7 @@ export const menuData: MenuItem[] = [
     name: 'دولمة ورق عنب بدون لحم',
     category: 'grape_leaves',
     image: img('grape-dolma.jpg'),
+    requiresSize: true,
     sizes: [
       { id: 's_med',   label: 'حجم وسط',  pieces: 0, price: 12000 },
       { id: 's_large', label: 'حجم كبير', pieces: 0, price: 16000 },
@@ -143,6 +147,7 @@ export const menuData: MenuItem[] = [
     name: 'دولمة ورق عنب باللحم',
     category: 'grape_leaves',
     image: img('grape-dolma.jpg'),
+    requiresSize: true,
     sizes: [
       { id: 's_med',   label: 'حجم وسط',  pieces: 0, price: 18000 },
       { id: 's_large', label: 'حجم كبير', pieces: 0, price: 22000 },

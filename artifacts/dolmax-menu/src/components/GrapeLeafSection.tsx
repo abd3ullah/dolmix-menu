@@ -64,10 +64,12 @@ function GrapeLeafSizedCard({
   onAdd: (item: Omit<CartItem, 'quantity' | 'id'>) => void;
   onUpdateQty: (id: string, delta: number) => void;
 }) {
-  const [selectedSizeId, setSelectedSizeId] = useState<string>(item.sizes?.[0]?.id || '');
+  const requiresSize = !!item.requiresSize;
+  const [selectedSizeId, setSelectedSizeId] = useState<string>(requiresSize ? '' : (item.sizes?.[0]?.id || ''));
+  const [showSizeWarning, setShowSizeWarning] = useState(false);
   const selectedSize = item.sizes?.find(s => s.id === selectedSizeId);
   const cartItemId = `${item.id}-${selectedSizeId}`;
-  const qty = getItemQuantity(cartItemId);
+  const qty = selectedSizeId ? getItemQuantity(cartItemId) : 0;
 
   return (
     <div data-item-id={item.id} className="bg-card border border-border/40 rounded-2xl overflow-hidden shadow-lg transition-shadow">
@@ -90,27 +92,40 @@ function GrapeLeafSizedCard({
       </div>
 
       <div className="p-4">
-        <p className="text-xs font-semibold text-primary mb-2">اختر الحجم:</p>
-        <div className="flex flex-wrap gap-2 mb-4">
-          {item.sizes?.map(size => (
-            <button
-              key={size.id}
-              onClick={() => setSelectedSizeId(size.id)}
-              className={cn(
-                "px-3 py-1.5 rounded-xl text-xs font-bold border transition-all duration-200 active:scale-95",
-                selectedSizeId === size.id
-                  ? "bg-primary text-primary-foreground border-primary shadow-sm"
-                  : "bg-background text-foreground border-border/50 hover:border-primary/50"
-              )}
-            >
-              {size.label}
-              {size.pieces > 0 && (
-                <span className={cn("mr-1 opacity-70", selectedSizeId === size.id ? "opacity-90" : "")}>
+        <div
+          className={cn(
+            "mb-4 rounded-xl transition-all duration-300",
+            showSizeWarning && "ring-2 ring-red-400/70 ring-offset-2 ring-offset-card p-2 -m-2 animate-pulse"
+          )}
+        >
+          <p className="text-xs font-semibold text-primary mb-2">اختر الحجم:</p>
+          <div className="flex flex-wrap gap-2">
+            {item.sizes?.map(size => (
+              <button
+                key={size.id}
+                onClick={() => { setSelectedSizeId(size.id); setShowSizeWarning(false); }}
+                className={cn(
+                  "px-3 py-1.5 rounded-xl text-xs font-bold border transition-all duration-200 active:scale-95",
+                  selectedSizeId === size.id
+                    ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                    : "bg-background text-foreground border-border/50 hover:border-primary/50"
+                )}
+              >
+                {size.label}
+                {size.pieces > 0 && (
+                  <span className={cn("mr-1 opacity-70", selectedSizeId === size.id ? "opacity-90" : "")}>
 ({size.pieces} حبة)
-                </span>
-              )}
-            </button>
-          ))}
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
+          {showSizeWarning && (
+            <p className="mt-2 text-xs font-bold text-red-400 flex items-center gap-1.5">
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-400" />
+              اختر الحجم أولاً
+            </p>
+          )}
         </div>
 
         <div className="flex justify-between items-center pt-3 border-t border-border/30">
@@ -145,6 +160,11 @@ function GrapeLeafSizedCard({
           ) : (
             <Button
               onClick={() => {
+                if (requiresSize && !selectedSize) {
+                  setShowSizeWarning(true);
+                  toast.error('اختر الحجم أولاً');
+                  return;
+                }
                 if (!selectedSize) return;
                 onAdd({
                   itemId: item.id,
