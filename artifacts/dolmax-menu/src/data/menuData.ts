@@ -29,7 +29,7 @@ export const menuData: MenuItem[] = [
   { id: 'f4', name: 'فتة اندومي',   price: 4500, category: 'fatta', image: img('fatta-indomie.png') },
   { id: 'f5', name: 'فتة تكساس',    price: 4500, category: 'fatta', image: img('fatta-texas.png') },
   { id: 'f6', name: 'فتة باريكيو',  price: 4500, category: 'fatta', image: img('fatta-bbq.png') },
-  { id: 'f7', name: 'فتة سبايسي',   price: 4500, category: 'fatta', image: img('fatta-spicy.png') },
+  { id: 'f7', name: 'فتة سبايسي',   price: 4500, category: 'fatta', image: img('fatta-spicy.jpg') },
 
   // ─── المحاشي ──────────────────────────────────────────────────────────────
   {
