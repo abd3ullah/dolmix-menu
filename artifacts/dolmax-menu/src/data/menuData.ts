@@ -139,12 +139,12 @@ export const menuData: MenuItem[] = [
   },
 
   // ─── المشروبات ────────────────────────────────────────────────────────────
-  { id: 'd1', name: 'بيبسي',  price: 500, category: 'drinks', image: img('drink-pepsi.png')  },
-  { id: 'd2', name: 'سبرايت', price: 500, category: 'drinks', image: img('drink-sprite.png') },
-  { id: 'd3', name: 'فانتا',  price: 500, category: 'drinks', image: img('drink-fanta.png')  },
+  { id: 'd1', name: 'بيبسي',  price: 500, category: 'drinks', image: img('drink-pepsi.jpg')  },
+  { id: 'd2', name: 'سبرايت', price: 500, category: 'drinks', image: img('drink-sprite.jpg') },
+  { id: 'd3', name: 'فانتا',  price: 500, category: 'drinks', image: img('drink-fanta.jpg')  },
   { id: 'd4', name: 'ديو',    price: 500, category: 'drinks', image: img('drink-dew.png')    },
   { id: 'd5', name: 'لبن',    price: 500, category: 'drinks', image: img('drink-laban.png')  },
-  { id: 'd6', name: 'ماء',    price: 500, category: 'drinks', image: img('drink-water.png')  },
+  { id: 'd6', name: 'ماء',    price: 500, category: 'drinks', image: img('drink-water.jpg')  },
 
   // ─── الصوص ────────────────────────────────────────────────────────────────
   { id: 's1', name: 'صوص DOLMIX',   price: 500, category: 'sauces', image: img('sauce-dolmax.png') },
