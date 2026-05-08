@@ -5,7 +5,7 @@ export type SizeOption = {
   price: number;
 };
 
-export type MenuCategory = 'fatta' | 'mahashi' | 'grape_leaves' | 'drinks' | 'sauces' | 'refreshing' | 'pilav';
+export type MenuCategory = 'fatta' | 'mahashi' | 'grape_leaves' | 'drinks' | 'sauces' | 'refreshing' | 'pilav' | 'fettuccine';
 
 export type MenuItem = {
   id: string;
@@ -158,6 +158,9 @@ export const menuData: MenuItem[] = [
   { id: 'r3', name: 'موهيتو باربي',         price: 5000, category: 'refreshing', image: img('mojito-berry.png')       },
   { id: 'r4', name: 'موهيتو بلوبيري',       price: 3500, category: 'refreshing', image: img('mojito-blueberry.png')   },
   { id: 'r5', name: 'آيس كوفي',             price: 2500, category: 'refreshing', image: img('ice-coffee.png')         },
+
+  // ─── فيتوشيني ────────────────────────────────────────────────────────────
+  { id: 'fe1', name: 'فيتوشيني الفريدو', price: 7000, description: 'المكونات: معكرونه طازجة، دجاج، فطر، مع الكريمة', category: 'fettuccine', image: img('fettuccine-alfredo.jpg') },
 
   // ─── پيلاو ────────────────────────────────────────────────────────────────
   { id: 'p1', name: 'پيلاو تركي كلاسك',  price: 4500, description: 'المكونات: ارز تركي، حمص، دجاج', category: 'pilav', image: img('pilav-classic.jpg')  },

@@ -12,6 +12,7 @@ import { FattaSection } from "./components/FattaSection";
 import { MahasshiSection } from "./components/MahasshiSection";
 import { GrapeLeafSection } from "./components/GrapeLeafSection";
 import { PilavSection } from "./components/PilavSection";
+import { FettuccineSection } from "./components/FettuccineSection";
 import { SimpleGridSection } from "./components/SimpleGridSection";
 import { RefreshingSection } from "./components/RefreshingSection";
 import { AboutSection } from "./components/AboutSection";
@@ -30,6 +31,7 @@ const SECTION_IDS = [
   "mahashi",
   "grape_leaves",
   "pilav",
+  "fettuccine",
   "drinks",
   "sauces",
   "refreshing",
@@ -143,6 +145,13 @@ function MenuApp() {
 
             <PilavSection
               items={byCategory('pilav')}
+              getItemQuantity={cart.getItemQuantity}
+              onAdd={cart.addToCart}
+              onUpdateQty={cart.updateQuantity}
+            />
+
+            <FettuccineSection
+              items={byCategory('fettuccine')}
               getItemQuantity={cart.getItemQuantity}
               onAdd={cart.addToCart}
               onUpdateQty={cart.updateQuantity}

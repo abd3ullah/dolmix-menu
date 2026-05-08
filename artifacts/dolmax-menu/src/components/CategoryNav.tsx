@@ -11,6 +11,7 @@ export const categories = [
   { id: 'mahashi',      label: 'المحاشي'            },
   { id: 'grape_leaves', label: 'ورق العنب'          },
   { id: 'pilav',        label: 'پيلاو'              },
+  { id: 'fettuccine',   label: 'فيتوشيني'           },
   { id: 'drinks',       label: 'المشروبات'          },
   { id: 'sauces',       label: 'الصوص'              },
   { id: 'refreshing',   label: 'المشروبات المنعشة'  },
