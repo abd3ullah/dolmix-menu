@@ -160,7 +160,7 @@ export const menuData: MenuItem[] = [
   { id: 'r5', name: 'آيس كوفي',             price: 2500, category: 'refreshing', image: img('ice-coffee.png')         },
 
   // ─── پيلاو ────────────────────────────────────────────────────────────────
-  { id: 'p1', name: 'پيلاو تركي كلاسك',  price: 4500, description: 'المكونات: ارز تركي، حمص، دجاج', category: 'pilav', image: img('pilav-classic.png')  },
-  { id: 'p2', name: 'پيلاو تركي كتشاب',  price: 4500, description: 'المكونات: ارز تركي، حمص، دجاج', category: 'pilav', image: img('pilav-ketchup.png')  },
-  { id: 'p3', name: 'پيلاو تركي تكساس',  price: 5000, description: 'المكونات: ارز تركي، حمص، دجاج', category: 'pilav', image: img('pilav-texas.png')   },
+  { id: 'p1', name: 'پيلاو تركي كلاسك',  price: 4500, description: 'المكونات: ارز تركي، حمص، دجاج', category: 'pilav', image: img('pilav-classic.jpg')  },
+  { id: 'p2', name: 'پيلاو تركي كتشاب',  price: 4500, description: 'المكونات: ارز تركي، حمص، دجاج', category: 'pilav', image: img('pilav-ketchup.jpg')  },
+  { id: 'p3', name: 'پيلاو تركي تكساس',  price: 5000, description: 'المكونات: ارز تركي، حمص، دجاج', category: 'pilav', image: img('pilav-texas.jpg')   },
 ];
