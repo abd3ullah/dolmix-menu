@@ -37,7 +37,7 @@ export const menuData: MenuItem[] = [
     name: 'مشكل ليمون بدون لحم',
     description: 'الحبات اختياري: ورق عنب، بصل، شجر، لهانة، بطاطا',
     category: 'mahashi',
-    image: img('mahashi-lemon.png'),
+    image: img('mahashi-lemon.jpg'),
     pieceOptions: ['ورق عنب', 'بصل', 'شجر', 'لهانة', 'بطاطا'],
     sizes: [
       { id: 's_m',      label: 'M',               pieces: 7,  price: 3000  },
@@ -53,7 +53,7 @@ export const menuData: MenuItem[] = [
     name: 'مشكل دبس الرمان مع لحم',
     description: 'الحبات اختياري: ورق عنب، بصل، شجر، بطاطا، فلفل، باذنجان، لهانة',
     category: 'mahashi',
-    image: img('mahashi-pomegranate.png'),
+    image: img('mahashi-pomegranate.jpg'),
     pieceOptions: ['ورق عنب', 'بصل', 'شجر', 'بطاطا', 'فلفل', 'باذنجان', 'لهانة'],
     sizes: [
       { id: 's_m',      label: 'M',               pieces: 7,  price: 4000  },
@@ -86,7 +86,7 @@ export const menuData: MenuItem[] = [
     id: 'g1',
     name: 'ورق عنب ليمون',
     category: 'grape_leaves',
-    image: img('grape-leaves-lemon.png'),
+    image: img('grape-leaves-lemon.jpg'),
     sizes: [
       { id: 's_m',      label: 'M',           pieces: 7,  price: 3000  },
       { id: 's_l',      label: 'L',           pieces: 20, price: 8000  },
@@ -99,7 +99,7 @@ export const menuData: MenuItem[] = [
     id: 'g2',
     name: 'ورق عنب دبس رمان',
     category: 'grape_leaves',
-    image: img('grape-leaves-pomegranate.png'),
+    image: img('grape-leaves-pomegranate.jpg'),
     sizes: [
       { id: 's_m',      label: 'M',           pieces: 7,  price: 3000  },
       { id: 's_l',      label: 'L',           pieces: 20, price: 8000  },
