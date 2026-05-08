@@ -70,7 +70,7 @@ export const menuData: MenuItem[] = [
     description: 'حجم وسط',
     price: 16000,
     category: 'mahashi',
-    image: img('mahashi-dolma-no-meat.png'),
+    image: img('mahashi-dolma.jpg'),
   },
   {
     id: 'm4',
@@ -78,7 +78,7 @@ export const menuData: MenuItem[] = [
     description: 'حجم وسط',
     price: 22000,
     category: 'mahashi',
-    image: img('mahashi-dolma-meat.png'),
+    image: img('mahashi-dolma.jpg'),
   },
 
   // ─── ورق العنب ────────────────────────────────────────────────────────────
@@ -127,7 +127,7 @@ export const menuData: MenuItem[] = [
     description: 'حجم وسط',
     price: 16000,
     category: 'grape_leaves',
-    image: img('grape-dolma-no-meat.png'),
+    image: img('grape-dolma.jpg'),
   },
   {
     id: 'g5',
@@ -135,7 +135,7 @@ export const menuData: MenuItem[] = [
     description: 'حجم وسط',
     price: 22000,
     category: 'grape_leaves',
-    image: img('grape-dolma-meat.png'),
+    image: img('grape-dolma.jpg'),
   },
 
   // ─── المشروبات ────────────────────────────────────────────────────────────
