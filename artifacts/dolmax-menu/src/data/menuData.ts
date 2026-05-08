@@ -67,18 +67,22 @@ export const menuData: MenuItem[] = [
   {
     id: 'm3',
     name: 'دولمة سلك بدون لحم',
-    description: 'حجم وسط',
-    price: 16000,
     category: 'mahashi',
     image: img('mahashi-dolma.jpg'),
+    sizes: [
+      { id: 's_med',   label: 'حجم وسط',  pieces: 0, price: 12000 },
+      { id: 's_large', label: 'حجم كبير', pieces: 0, price: 16000 },
+    ],
   },
   {
     id: 'm4',
     name: 'دولمة سلك باللحم',
-    description: 'حجم وسط',
-    price: 22000,
     category: 'mahashi',
     image: img('mahashi-dolma.jpg'),
+    sizes: [
+      { id: 's_med',   label: 'حجم وسط',  pieces: 0, price: 18000 },
+      { id: 's_large', label: 'حجم كبير', pieces: 0, price: 22000 },
+    ],
   },
 
   // ─── ورق العنب ────────────────────────────────────────────────────────────
@@ -88,11 +92,12 @@ export const menuData: MenuItem[] = [
     category: 'grape_leaves',
     image: img('grape-leaves-lemon.jpg'),
     sizes: [
-      { id: 's_m',      label: 'M',           pieces: 7,  price: 3000  },
-      { id: 's_l',      label: 'L',           pieces: 20, price: 8000  },
-      { id: 's_xl',     label: 'XL',          pieces: 40, price: 15000 },
-      { id: 's_xxl',    label: 'XXL',         pieces: 60, price: 23000 },
-      { id: 's_dolmax', label: 'طبق DOLMIX',  pieces: 14, price: 5000  },
+      { id: 's_m',      label: 'M',               pieces: 7,  price: 3000  },
+      { id: 's_l',      label: 'L',               pieces: 20, price: 8000  },
+      { id: 's_xl',     label: 'XL',              pieces: 40, price: 15000 },
+      { id: 's_xxl',    label: 'XXL',             pieces: 60, price: 23000 },
+      { id: 's_dolmax', label: 'طبق DOLMIX',      pieces: 14, price: 5000  },
+      { id: 's_party',  label: 'صينية الضيافة',  pieces: 70, price: 25000 },
     ]
   },
   {
@@ -101,11 +106,12 @@ export const menuData: MenuItem[] = [
     category: 'grape_leaves',
     image: img('grape-leaves-pomegranate.jpg'),
     sizes: [
-      { id: 's_m',      label: 'M',           pieces: 7,  price: 3000  },
-      { id: 's_l',      label: 'L',           pieces: 20, price: 8000  },
-      { id: 's_xl',     label: 'XL',          pieces: 40, price: 15000 },
-      { id: 's_xxl',    label: 'XXL',         pieces: 60, price: 23000 },
-      { id: 's_dolmax', label: 'طبق DOLMIX',  pieces: 14, price: 5000  },
+      { id: 's_m',      label: 'M',               pieces: 7,  price: 3000  },
+      { id: 's_l',      label: 'L',               pieces: 20, price: 8000  },
+      { id: 's_xl',     label: 'XL',              pieces: 40, price: 15000 },
+      { id: 's_xxl',    label: 'XXL',             pieces: 60, price: 23000 },
+      { id: 's_dolmax', label: 'طبق DOLMIX',      pieces: 14, price: 5000  },
+      { id: 's_party',  label: 'صينية الضيافة',  pieces: 70, price: 25000 },
     ]
   },
   {
@@ -114,11 +120,12 @@ export const menuData: MenuItem[] = [
     category: 'grape_leaves',
     image: img('grape-leaves-spicy.png'),
     sizes: [
-      { id: 's_m',      label: 'M',           pieces: 7,  price: 3000  },
-      { id: 's_l',      label: 'L',           pieces: 20, price: 8000  },
-      { id: 's_xl',     label: 'XL',          pieces: 40, price: 15000 },
-      { id: 's_xxl',    label: 'XXL',         pieces: 60, price: 23000 },
-      { id: 's_dolmax', label: 'طبق DOLMIX',  pieces: 14, price: 5000  },
+      { id: 's_m',      label: 'M',               pieces: 7,  price: 3000  },
+      { id: 's_l',      label: 'L',               pieces: 20, price: 8000  },
+      { id: 's_xl',     label: 'XL',              pieces: 40, price: 15000 },
+      { id: 's_xxl',    label: 'XXL',             pieces: 60, price: 23000 },
+      { id: 's_dolmax', label: 'طبق DOLMIX',      pieces: 14, price: 5000  },
+      { id: 's_party',  label: 'صينية الضيافة',  pieces: 70, price: 25000 },
     ]
   },
   {
