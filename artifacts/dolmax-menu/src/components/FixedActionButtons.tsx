@@ -2,7 +2,7 @@ import { Phone, MessageCircle } from 'lucide-react';
 
 export function FixedActionButtons() {
   return (
-    <div className="fixed bottom-24 left-4 right-4 z-40 flex justify-between pointer-events-none">
+    <div className="fixed safe-bottom-offset-lg left-4 right-4 z-40 flex justify-between pointer-events-none mx-auto max-w-md">
       <a 
         href="https://wa.me/9647719461693" 
         target="_blank" 

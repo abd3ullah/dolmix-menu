@@ -92,7 +92,7 @@ function MenuApp() {
   const noResults = searchQuery.trim() && filteredData.length === 0;
 
   return (
-    <div className="min-h-[100dvh] pb-36" dir="rtl">
+    <div className="min-h-[100dvh] pb-36 safe-bottom" dir="rtl">
       <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
       {!searchQuery && (

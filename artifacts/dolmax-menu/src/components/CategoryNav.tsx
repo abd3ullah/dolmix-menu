@@ -21,7 +21,7 @@ export function CategoryNav({ activeCategory, onSelectCategory }: CategoryNavPro
   return (
     <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-border/40 py-3">
       <div
-        className="flex gap-2.5 overflow-x-auto px-4"
+        className="flex gap-2.5 overflow-x-auto px-4 max-w-md mx-auto"
         style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
       >
         {categories.map(cat => (

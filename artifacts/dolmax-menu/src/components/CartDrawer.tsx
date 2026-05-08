@@ -110,7 +110,7 @@ export function CartDrawer({ open, onOpenChange, cart }: CartDrawerProps) {
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] sm:h-auto sm:max-h-[90vh] rounded-t-3xl bg-background border-border p-0 flex flex-col">
+      <SheetContent side="bottom" className="h-[85dvh] sm:h-auto sm:max-h-[90dvh] rounded-t-3xl bg-background border-border p-0 flex flex-col">
         <SheetHeader className="p-4 border-b border-border/50 text-right">
           <SheetTitle className="text-2xl font-bold text-primary flex items-center gap-2 justify-between">
             <div className="flex items-center gap-2">

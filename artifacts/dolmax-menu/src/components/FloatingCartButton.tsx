@@ -12,7 +12,7 @@ export function FloatingCartButton({ totalItems, totalPrice, onClick }: Floating
   if (totalItems === 0) return null;
 
   return (
-    <div className="fixed bottom-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
+    <div className="fixed safe-bottom-offset left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
       <button
         onClick={onClick}
         className={cn(
