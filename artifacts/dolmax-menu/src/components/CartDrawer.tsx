@@ -112,17 +112,17 @@ export function CartDrawer({ open, onOpenChange, cart }: CartDrawerProps) {
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="bottom" className="h-[85dvh] sm:h-auto sm:max-h-[90dvh] rounded-t-3xl bg-background border-border p-0 flex flex-col [&>button.absolute]:hidden">
         <SheetHeader className="px-4 py-3 border-b border-border/50">
-          <div className="relative flex items-center justify-between min-h-[44px]">
+          <div className="flex items-center justify-between gap-4 sm:gap-6 min-h-[44px]">
             {/* Close button (start side in RTL = visually right) */}
             <SheetClose
               aria-label="إغلاق"
-              className="relative z-10 inline-flex items-center justify-center w-11 h-11 rounded-full bg-card text-foreground border border-border/60 shadow-sm hover:bg-muted active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-primary/40"
+              className="shrink-0 inline-flex items-center justify-center w-11 h-11 rounded-full bg-card text-foreground border border-border/60 shadow-sm hover:bg-muted active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-primary/40"
             >
               <X className="w-5 h-5" />
             </SheetClose>
 
             {/* Centered title */}
-            <SheetTitle className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 m-0 text-xl sm:text-2xl font-bold text-primary flex items-center gap-2 whitespace-nowrap">
+            <SheetTitle className="flex-1 m-0 text-xl sm:text-2xl font-bold text-primary flex items-center justify-center gap-2 whitespace-nowrap">
               <ShoppingBag className="w-5 h-5 sm:w-6 sm:h-6" />
               سلة الطلبات
             </SheetTitle>
@@ -132,13 +132,13 @@ export function CartDrawer({ open, onOpenChange, cart }: CartDrawerProps) {
               <button
                 onClick={clearCart}
                 aria-label="تفريغ السلة"
-                className="relative z-10 inline-flex items-center gap-1.5 h-11 px-3 rounded-full bg-destructive/15 text-destructive border border-destructive/40 font-bold text-xs sm:text-sm shadow-sm hover:bg-destructive/25 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-destructive/40"
+                className="shrink-0 inline-flex items-center gap-1.5 h-11 px-3 rounded-full bg-destructive/15 text-destructive border border-destructive/40 font-bold text-xs sm:text-sm shadow-sm hover:bg-destructive/25 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-destructive/40"
               >
                 <Trash2 className="w-4 h-4" />
                 <span>تفريغ السلة</span>
               </button>
             ) : (
-              <span className="w-11 h-11" aria-hidden="true" />
+              <span className="shrink-0 w-11 h-11" aria-hidden="true" />
             )}
           </div>
           <SheetDescription className="hidden">سلة طلبات DOLMIX</SheetDescription>
