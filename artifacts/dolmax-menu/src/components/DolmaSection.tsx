@@ -140,9 +140,12 @@ export function DolmaSection({ items, getItemQuantity, onAdd, onUpdateQty }: Dol
 
   return (
     <section id="dolma" className="py-6 px-4">
-      <div className="mb-5">
-        <h2 className="text-2xl font-bold text-foreground">دولمة</h2>
-        <div className="mt-1 h-0.5 w-12 bg-primary rounded-full" />
+      <div className="max-w-md mx-auto">
+        <h2 className="text-2xl font-bold text-primary mb-6 flex items-center gap-3 justify-center">
+          <span className="flex-1 h-px bg-primary/30"></span>
+          قسم الدولمة
+          <span className="flex-1 h-px bg-primary/30"></span>
+        </h2>
       </div>
       <div className="space-y-4">
         {items.map(item => (
