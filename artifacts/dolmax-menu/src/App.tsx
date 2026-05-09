@@ -21,10 +21,10 @@ import { InstagramSection } from "./components/InstagramSection";
 import { CartDrawer } from "./components/CartDrawer";
 import { FloatingCartButton } from "./components/FloatingCartButton";
 import { FixedActionButtons } from "./components/FixedActionButtons";
-import { DecorBanner } from "./components/DecorBanner";
+import { DecorSlider } from "./components/DecorSlider";
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
-const decor = (n: 1 | 2 | 3 | 4) => `${BASE}/images/decor-${n}.jpg`;
+const DECOR_IMAGES = [1, 2, 3, 4].map(n => `${BASE}/images/decor-${n}.jpg`);
 
 import { menuData } from "./data/menuData";
 import { useCart } from "./hooks/useCart";
@@ -121,7 +121,7 @@ function MenuApp() {
         ) : (
           <>
             {!searchQuery && (
-              <DecorBanner src={decor(1)} variant="hero" alt="DOLMIX" />
+              <DecorSlider images={DECOR_IMAGES} variant="opening" />
             )}
 
             {!searchQuery && (
@@ -146,10 +146,6 @@ function MenuApp() {
               onAdd={cart.addToCart}
               onUpdateQty={cart.updateQuantity}
             />
-
-            {!searchQuery && (
-              <DecorBanner src={decor(2)} variant="divider" />
-            )}
 
             <DolmaSection
               items={byCategory('dolma')}
@@ -188,10 +184,6 @@ function MenuApp() {
               onUpdateQty={cart.updateQuantity}
             />
 
-            {!searchQuery && (
-              <DecorBanner src={decor(3)} variant="divider" />
-            )}
-
             <SimpleGridSection
               id="drinks"
               title="المشروبات"
@@ -209,7 +201,7 @@ function MenuApp() {
             />
 
             {!searchQuery && (
-              <DecorBanner src={decor(4)} variant="closing" />
+              <DecorSlider images={DECOR_IMAGES} variant="closing" />
             )}
             {!searchQuery && <AboutSection />}
             {!searchQuery && <InstagramSection />}
