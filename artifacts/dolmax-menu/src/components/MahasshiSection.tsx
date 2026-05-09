@@ -67,20 +67,18 @@ function MahasshiSizedCard({
   const requiresSize = !!item.requiresSize;
   const [selectedSizeId, setSelectedSizeId] = useState<string>(requiresSize ? '' : (item.sizes?.[0]?.id || ''));
   const [selectedPieces, setSelectedPieces] = useState<string[]>([]);
-  const [showValidationWarning, setShowValidationWarning] = useState(false);
+  const [showPieceWarning, setShowPieceWarning] = useState(false);
+  const [showSizeWarning, setShowSizeWarning] = useState(false);
   const selectedSize = item.sizes?.find(s => s.id === selectedSizeId);
   const cartItemId = `${item.id}-${selectedSizeId}`;
   const qty = selectedSizeId ? getItemQuantity(cartItemId) : 0;
   const requiresPiece = !!(item.pieceOptions && item.pieceOptions.length > 0);
 
-  const sizeInvalid = requiresSize && !selectedSize;
-  const pieceInvalid = requiresPiece && selectedPieces.length === 0;
-
   const togglePiece = (piece: string) => {
     setSelectedPieces(prev =>
       prev.includes(piece) ? prev.filter(p => p !== piece) : [...prev, piece]
     );
-    setShowValidationWarning(false);
+    setShowPieceWarning(false);
   };
 
   return (
@@ -110,7 +108,7 @@ function MahasshiSizedCard({
         <div
           className={cn(
             "mb-4 rounded-xl transition-all duration-300",
-            showValidationWarning && sizeInvalid && "ring-2 ring-red-400/70 ring-offset-2 ring-offset-card p-2 -m-2 animate-pulse"
+            showSizeWarning && "ring-2 ring-red-400/70 ring-offset-2 ring-offset-card p-2 -m-2 animate-pulse"
           )}
         >
           <p className="text-xs font-semibold text-primary mb-2">اختر الحجم:</p>
@@ -118,7 +116,7 @@ function MahasshiSizedCard({
             {item.sizes?.map(size => (
               <button
                 key={size.id}
-                onClick={() => { setSelectedSizeId(size.id); setShowValidationWarning(false); }}
+                onClick={() => { setSelectedSizeId(size.id); setShowSizeWarning(false); }}
                 className={cn(
                   "w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold border transition-all duration-200 active:scale-95",
                   selectedSizeId === size.id
@@ -142,6 +140,12 @@ function MahasshiSizedCard({
               </button>
             ))}
           </div>
+          {showSizeWarning && (
+            <p className="mt-2 text-xs font-bold text-red-400 flex items-center gap-1.5">
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-400" />
+              اختر الحجم أولاً
+            </p>
+          )}
         </div>
 
         {/* Piece type selector — only for items that have pieceOptions */}
@@ -149,7 +153,7 @@ function MahasshiSizedCard({
           <div
             className={cn(
               "mb-4 rounded-xl transition-all duration-300",
-              showValidationWarning && pieceInvalid && "ring-2 ring-red-400/70 ring-offset-2 ring-offset-card p-2 -m-2 animate-pulse"
+              showPieceWarning && "ring-2 ring-red-400/70 ring-offset-2 ring-offset-card p-2 -m-2 animate-pulse"
             )}
           >
             <p className="text-xs font-semibold text-primary mb-2">
@@ -171,15 +175,13 @@ function MahasshiSizedCard({
                 </button>
               ))}
             </div>
+            {showPieceWarning && (
+              <p className="mt-2 text-xs font-bold text-red-400 flex items-center gap-1.5">
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-400" />
+                اختر نوع الحبات أولاً
+              </p>
+            )}
           </div>
-        )}
-
-        {/* Single combined validation note */}
-        {showValidationWarning && (sizeInvalid || pieceInvalid) && (
-          <p className="mb-3 text-xs font-semibold text-red-400/90 flex items-center gap-1.5">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-400/80 shrink-0" />
-            {requiresPiece ? 'اختر الحجم واختر نوع الحبات' : 'اختر الحجم'}
-          </p>
         )}
 
         <div className="flex justify-between items-center pt-3 border-t border-border/30">
@@ -224,11 +226,17 @@ function MahasshiSizedCard({
           ) : (
             <Button
               onClick={() => {
-                if ((requiresSize && !selectedSize) || (requiresPiece && selectedPieces.length === 0)) {
-                  setShowValidationWarning(true);
+                if (requiresSize && !selectedSize) {
+                  setShowSizeWarning(true);
+                  toast.error('اختر الحجم أولاً');
                   return;
                 }
                 if (!selectedSize) return;
+                if (requiresPiece && selectedPieces.length === 0) {
+                  setShowPieceWarning(true);
+                  toast.error('اختر نوع الحبات أولاً');
+                  return;
+                }
                 onAdd({
                   itemId: item.id,
                   name: `${item.name} - ${selectedSize.label}`,
