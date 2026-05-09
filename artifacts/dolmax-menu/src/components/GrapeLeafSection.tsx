@@ -128,9 +128,9 @@ function GrapeLeafSizedCard({
             ))}
           </div>
           {showSizeWarning && (
-            <p className="mt-2 text-xs font-bold text-red-400 flex items-center gap-1.5">
-              <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-400" />
-              اختر الحجم أولاً
+            <p className="mt-2 text-xs font-semibold text-red-400/90 flex items-center gap-1.5">
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-400/80 shrink-0" />
+              اختر الحجم
             </p>
           )}
         </div>
@@ -169,7 +169,6 @@ function GrapeLeafSizedCard({
               onClick={() => {
                 if (requiresSize && !selectedSize) {
                   setShowSizeWarning(true);
-                  toast.error('اختر الحجم أولاً');
                   return;
                 }
                 if (!selectedSize) return;
