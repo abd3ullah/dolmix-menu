@@ -5,7 +5,7 @@ export type SizeOption = {
   price: number;
 };
 
-export type MenuCategory = 'fatta' | 'mahashi' | 'grape_leaves' | 'drinks' | 'sauces' | 'refreshing' | 'pilav' | 'fettuccine';
+export type MenuCategory = 'fatta' | 'mahashi' | 'grape_leaves' | 'dolma' | 'drinks' | 'sauces' | 'refreshing' | 'pilav' | 'fettuccine';
 
 export type MenuItem = {
   id: string;
@@ -68,7 +68,7 @@ export const menuData: MenuItem[] = [
   {
     id: 'm3',
     name: 'دولمة سلك بدون لحم',
-    category: 'mahashi',
+    category: 'dolma',
     image: img('mahashi-dolma.jpg'),
     requiresSize: true,
     sizes: [
@@ -79,7 +79,7 @@ export const menuData: MenuItem[] = [
   {
     id: 'm4',
     name: 'دولمة سلك باللحم',
-    category: 'mahashi',
+    category: 'dolma',
     image: img('mahashi-dolma.jpg'),
     requiresSize: true,
     sizes: [
@@ -134,7 +134,7 @@ export const menuData: MenuItem[] = [
   {
     id: 'g4',
     name: 'دولمة ورق عنب بدون لحم',
-    category: 'grape_leaves',
+    category: 'dolma',
     image: img('grape-dolma.jpg'),
     requiresSize: true,
     sizes: [
@@ -145,7 +145,7 @@ export const menuData: MenuItem[] = [
   {
     id: 'g5',
     name: 'دولمة ورق عنب باللحم',
-    category: 'grape_leaves',
+    category: 'dolma',
     image: img('grape-dolma.jpg'),
     requiresSize: true,
     sizes: [

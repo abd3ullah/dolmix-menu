@@ -11,6 +11,7 @@ import { FeaturedSection } from "./components/FeaturedSection";
 import { FattaSection } from "./components/FattaSection";
 import { MahasshiSection } from "./components/MahasshiSection";
 import { GrapeLeafSection } from "./components/GrapeLeafSection";
+import { DolmaSection } from "./components/DolmaSection";
 import { PilavSection } from "./components/PilavSection";
 import { FettuccineSection } from "./components/FettuccineSection";
 import { SimpleGridSection } from "./components/SimpleGridSection";
@@ -27,13 +28,14 @@ import { useCart } from "./hooks/useCart";
 const queryClient = new QueryClient();
 
 const SECTION_IDS = [
-  "fatta",
-  "mahashi",
   "grape_leaves",
+  "mahashi",
+  "dolma",
+  "sauces",
+  "fatta",
   "pilav",
   "fettuccine",
   "drinks",
-  "sauces",
   "refreshing",
   "about",
 ];
@@ -123,8 +125,8 @@ function MenuApp() {
               />
             )}
 
-            <FattaSection
-              items={byCategory('fatta')}
+            <GrapeLeafSection
+              items={byCategory('grape_leaves')}
               getItemQuantity={cart.getItemQuantity}
               onAdd={cart.addToCart}
               onUpdateQty={cart.updateQuantity}
@@ -137,8 +139,24 @@ function MenuApp() {
               onUpdateQty={cart.updateQuantity}
             />
 
-            <GrapeLeafSection
-              items={byCategory('grape_leaves')}
+            <DolmaSection
+              items={byCategory('dolma')}
+              getItemQuantity={cart.getItemQuantity}
+              onAdd={cart.addToCart}
+              onUpdateQty={cart.updateQuantity}
+            />
+
+            <SimpleGridSection
+              id="sauces"
+              title="الصوص"
+              items={byCategory('sauces')}
+              getItemQuantity={cart.getItemQuantity}
+              onAdd={cart.addToCart}
+              onUpdateQty={cart.updateQuantity}
+            />
+
+            <FattaSection
+              items={byCategory('fatta')}
               getItemQuantity={cart.getItemQuantity}
               onAdd={cart.addToCart}
               onUpdateQty={cart.updateQuantity}
@@ -162,15 +180,6 @@ function MenuApp() {
               id="drinks"
               title="المشروبات"
               items={byCategory('drinks')}
-              getItemQuantity={cart.getItemQuantity}
-              onAdd={cart.addToCart}
-              onUpdateQty={cart.updateQuantity}
-            />
-
-            <SimpleGridSection
-              id="sauces"
-              title="الصوص"
-              items={byCategory('sauces')}
               getItemQuantity={cart.getItemQuantity}
               onAdd={cart.addToCart}
               onUpdateQty={cart.updateQuantity}

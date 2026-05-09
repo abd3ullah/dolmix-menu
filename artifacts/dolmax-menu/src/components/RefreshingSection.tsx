@@ -19,7 +19,7 @@ export function RefreshingSection({ items, getItemQuantity, onAdd, onUpdateQty }
       <div className="max-w-md mx-auto">
         <h2 className="text-2xl font-bold text-primary mb-6 flex items-center gap-3 justify-center">
           <span className="flex-1 h-px bg-primary/30"></span>
-          المشروبات المنعشة
+          مشروبات منعشه
           <span className="flex-1 h-px bg-primary/30"></span>
         </h2>
 
