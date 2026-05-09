@@ -41,12 +41,13 @@ export const menuData: MenuItem[] = [
     image: img('mahashi-lemon.jpg'),
     pieceOptions: ['ورق عنب', 'بصل', 'شجر', 'لهانة', 'بطاطا'],
     sizes: [
-      { id: 's_m',      label: 'M',               pieces: 7,  price: 3000  },
-      { id: 's_l',      label: 'L',               pieces: 20, price: 8000  },
-      { id: 's_xl',     label: 'XL',              pieces: 40, price: 15000 },
-      { id: 's_xxl',    label: 'XXL',             pieces: 60, price: 23000 },
-      { id: 's_dolmax', label: 'طبق DOLMIX',       pieces: 14, price: 5000  },
-      { id: 's_party',  label: 'صينية الضيافة',   pieces: 70, price: 25000 },
+      { id: 's_m',       label: 'M',               pieces: 7,  price: 3000  },
+      { id: 's_l',       label: 'L',               pieces: 20, price: 8000  },
+      { id: 's_xl',      label: 'XL',              pieces: 40, price: 15000 },
+      { id: 's_xxl',     label: 'XXL',             pieces: 60, price: 23000 },
+      { id: 's_dolmax',  label: 'طبق DOLMIX',       pieces: 14, price: 5000  },
+      { id: 's_party',   label: 'صينية الضيافة',   pieces: 70, price: 25000 },
+      { id: 's_happy',   label: 'بوكس السعادة',    pieces: 50, price: 19000 },
     ]
   },
   {
@@ -63,6 +64,7 @@ export const menuData: MenuItem[] = [
       { id: 's_xxl',    label: 'XXL',             pieces: 60, price: 28750 },
       { id: 's_dolmax', label: 'طبق DOLMIX',       pieces: 14, price: 6750  },
       { id: 's_party',  label: 'صينية الضيافة',   pieces: 70, price: 33750 },
+      { id: 's_happy',  label: 'بوكس السعادة',    pieces: 50, price: 24500 },
     ]
   },
   {
@@ -101,6 +103,7 @@ export const menuData: MenuItem[] = [
       { id: 's_xxl',    label: 'XXL',             pieces: 60, price: 23000 },
       { id: 's_dolmax', label: 'طبق DOLMIX',      pieces: 14, price: 5000  },
       { id: 's_party',  label: 'صينية الضيافة',  pieces: 70, price: 25000 },
+      { id: 's_happy',  label: 'بوكس السعادة',   pieces: 50, price: 19000 },
     ]
   },
   {
@@ -115,13 +118,14 @@ export const menuData: MenuItem[] = [
       { id: 's_xxl',    label: 'XXL',             pieces: 60, price: 23000 },
       { id: 's_dolmax', label: 'طبق DOLMIX',      pieces: 14, price: 5000  },
       { id: 's_party',  label: 'صينية الضيافة',  pieces: 70, price: 25000 },
+      { id: 's_happy',  label: 'بوكس السعادة',   pieces: 50, price: 19000 },
     ]
   },
   {
     id: 'g3',
     name: 'ورق عنب سبايسي',
     category: 'grape_leaves',
-    image: img('grape-leaves-spicy.png'),
+    image: img('grape-leaves-spicy.jpg'),
     sizes: [
       { id: 's_m',      label: 'M',               pieces: 7,  price: 3000  },
       { id: 's_l',      label: 'L',               pieces: 20, price: 8000  },
@@ -129,6 +133,7 @@ export const menuData: MenuItem[] = [
       { id: 's_xxl',    label: 'XXL',             pieces: 60, price: 23000 },
       { id: 's_dolmax', label: 'طبق DOLMIX',      pieces: 14, price: 5000  },
       { id: 's_party',  label: 'صينية الضيافة',  pieces: 70, price: 25000 },
+      { id: 's_happy',  label: 'بوكس السعادة',   pieces: 50, price: 19000 },
     ]
   },
   {
