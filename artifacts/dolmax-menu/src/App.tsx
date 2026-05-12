@@ -52,10 +52,6 @@ function MenuApp() {
   const [serviceInfo, setServiceInfo] = useState<ServiceInfo | null>(null);
   const cart = useCart();
 
-  if (!serviceInfo) {
-    return <ServiceTypeGate onComplete={setServiceInfo} />;
-  }
-
   const handleSelectCategory = (category: string) => {
     setActiveCategory(category);
     if (category === 'all') {
@@ -103,6 +99,10 @@ function MenuApp() {
   ].filter(Boolean);
 
   const noResults = searchQuery.trim() && filteredData.length === 0;
+
+  if (!serviceInfo) {
+    return <ServiceTypeGate onComplete={setServiceInfo} />;
+  }
 
   return (
     <div className="min-h-[100dvh] pb-36 safe-bottom" dir="rtl">
