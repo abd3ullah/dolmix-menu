@@ -113,10 +113,24 @@ export function CartDrawer({ open, onOpenChange, cart, serviceInfo }: CartDrawer
       if (sizeLabel) {
         orderText += `   الحجم: ${sizeLabel}\n`;
       }
-      orderText += `   العدد: ${item.quantity} = ${formatPrice(item.unitPrice * item.quantity)}\n`;
-      if (item.selectedPieces) {
+      // Per-type piece breakdown takes priority over the legacy comma-joined
+      // string so the kitchen sees an unambiguous count for each selected type.
+      const distEntries = item.pieceDistribution
+        ? Object.entries(item.pieceDistribution).filter(([, v]) => v > 0)
+        : [];
+      if (distEntries.length > 1) {
+        orderText += `   التوزيع:\n`;
+        for (const [type, count] of distEntries) {
+          orderText += `   - ${type}: ${count}\n`;
+        }
+      } else if (distEntries.length === 1) {
+        // single selected type: omit the breakdown list per spec, just name it
+        const [type] = distEntries[0]!;
+        orderText += `   نوع الحبات: ${type}\n`;
+      } else if (item.selectedPieces) {
         orderText += `   الحبات المختارة: ${item.selectedPieces}\n`;
       }
+      orderText += `   العدد: ${item.quantity} = ${formatPrice(item.unitPrice * item.quantity)}\n`;
       if (index < items.length - 1) {
         orderText += `\n`;
       }
@@ -187,11 +201,32 @@ export function CartDrawer({ open, onOpenChange, cart, serviceInfo }: CartDrawer
             <div className="space-y-4">
               {items.map(item => (
                 <div key={item.id} className="bg-card p-3 rounded-xl border border-border/50 flex gap-3 shadow-sm">
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     <h4 className="font-bold text-foreground mb-0.5">{item.name}</h4>
-                    {item.selectedPieces && (
-                      <p className="text-xs text-muted-foreground mb-1">الحبات: {item.selectedPieces}</p>
-                    )}
+                    {(() => {
+                      const distEntries = item.pieceDistribution
+                        ? Object.entries(item.pieceDistribution).filter(([, v]) => v > 0)
+                        : [];
+                      if (distEntries.length > 1) {
+                        return (
+                          <ul className="text-xs text-muted-foreground mb-1 space-y-0.5">
+                            {distEntries.map(([type, count]) => (
+                              <li key={type} className="flex items-center gap-1.5">
+                                <span className="inline-block w-1 h-1 rounded-full bg-primary/60" />
+                                <span className="truncate">{type}</span>
+                                <span className="font-bold text-foreground tabular-nums">: {count}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        );
+                      }
+                      if (item.selectedPieces) {
+                        return (
+                          <p className="text-xs text-muted-foreground mb-1">الحبات: {item.selectedPieces}</p>
+                        );
+                      }
+                      return null;
+                    })()}
                     <p className="text-primary font-semibold">{formatPrice(item.unitPrice)}</p>
                   </div>
 

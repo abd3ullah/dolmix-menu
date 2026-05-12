@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { MenuItem } from '../data/menuData';
 import { formatPrice } from '../lib/format';
 import { Plus, Minus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { CartItem } from '../hooks/useCart';
+import { CartItem, cartLineId } from '../hooks/useCart';
 import { toast } from 'sonner';
 
 interface MahasshiSectionProps {
@@ -52,6 +52,22 @@ export function MahasshiSection({ items, getItemQuantity, onAdd, onUpdateQty }: 
   );
 }
 
+/**
+ * Spread `total` pieces across `types` as evenly as possible. Any remainder is
+ * given to the first types (so 14 / 3 → [5, 5, 4]).
+ */
+function autoDistribute(total: number, types: string[]): Record<string, number> {
+  const out: Record<string, number> = {};
+  const n = types.length;
+  if (n === 0 || total <= 0) return out;
+  const base = Math.floor(total / n);
+  const remainder = total - base * n;
+  types.forEach((t, i) => {
+    out[t] = base + (i < remainder ? 1 : 0);
+  });
+  return out;
+}
+
 // ── Card for items with size options (m1, m2) + optional piece selector ──────
 function MahasshiSizedCard({
   item,
@@ -69,17 +85,97 @@ function MahasshiSizedCard({
   const [selectedPieces, setSelectedPieces] = useState<string[]>([]);
   const [showPieceWarning, setShowPieceWarning] = useState(false);
   const [showSizeWarning, setShowSizeWarning] = useState(false);
+  const [showDistWarning, setShowDistWarning] = useState(false);
+  const [distribution, setDistribution] = useState<Record<string, number>>({});
   const selectedSize = item.sizes?.find(s => s.id === selectedSizeId);
-  const cartItemId = `${item.id}-${selectedSizeId}`;
-  const qty = selectedSizeId ? getItemQuantity(cartItemId) : 0;
   const hasPieceOptions = !!(item.pieceOptions && item.pieceOptions.length > 0);
   const requiresPiece = hasPieceOptions && item.pieceOptionsRequired !== false;
+
+  // Distribution is only meaningful when the customer picked more than one
+  // type AND the size has a known piece count to split across them.
+  const totalPieces = selectedSize?.pieces ?? 0;
+  const needsDistribution = hasPieceOptions && selectedPieces.length > 1 && totalPieces > 0;
+
+  // Stable dep key so the auto-distribute effect re-runs only when the *set*
+  // of selected types or the total piece count actually changes — not on
+  // every parent re-render that hands us a new array reference.
+  const piecesKey = useMemo(
+    () => [...selectedPieces].sort().join('|'),
+    [selectedPieces],
+  );
+
+  useEffect(() => {
+    if (!needsDistribution) {
+      // collapse the distribution UI / state when not applicable
+      if (Object.keys(distribution).length > 0) setDistribution({});
+      setShowDistWarning(false);
+      return;
+    }
+    // Reset to an even split whenever the selected set or the total changes.
+    // The user can then adjust manually with the steppers.
+    setDistribution(autoDistribute(totalPieces, selectedPieces));
+    setShowDistWarning(false);
+    // intentionally only depend on the stable keys, not on `distribution` itself
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [piecesKey, totalPieces, needsDistribution]);
+
+  const distributionSum = useMemo(
+    () => Object.values(distribution).reduce((a, b) => a + b, 0),
+    [distribution],
+  );
+  const distributionValid = !needsDistribution || distributionSum === totalPieces;
 
   const togglePiece = (piece: string) => {
     setSelectedPieces(prev =>
       prev.includes(piece) ? prev.filter(p => p !== piece) : [...prev, piece]
     );
     setShowPieceWarning(false);
+    setShowDistWarning(false);
+  };
+
+  const adjustDistribution = (piece: string, delta: number) => {
+    setDistribution(prev => {
+      const current = prev[piece] ?? 0;
+      const next = Math.max(0, Math.min(totalPieces, current + delta));
+      if (next === current) return prev;
+      setShowDistWarning(false);
+      return { ...prev, [piece]: next };
+    });
+  };
+
+  // The piece-distribution map we'd actually attach to the cart item *right
+  // now*, given the current selection. Recomputed each render so the cart-id
+  // we use to look up the existing quantity matches what addToCart will write.
+  const currentDistribution: Record<string, number> | undefined = useMemo(() => {
+    if (needsDistribution) return { ...distribution };
+    if (selectedPieces.length === 1 && totalPieces > 0) {
+      // Single-type case: implicitly all pieces go to that one type. We still
+      // record it so (a) the kitchen sees a breakdown, and (b) two single-type
+      // selections with different types are kept as separate cart lines.
+      return { [selectedPieces[0]!]: totalPieces };
+    }
+    return undefined;
+  }, [needsDistribution, distribution, selectedPieces, totalPieces]);
+
+  // Canonical id for the line this card would touch — shared with useCart so
+  // the +/- controls and the addToCart merge agree on which line is "this one".
+  const cartItemId = selectedSizeId
+    ? cartLineId(item.id, selectedSizeId, currentDistribution)
+    : '';
+  const qty = cartItemId ? getItemQuantity(cartItemId) : 0;
+
+  const buildCartPayload = (): Omit<CartItem, 'quantity' | 'id'> | null => {
+    if (!selectedSize) return null;
+    return {
+      itemId: item.id,
+      name: `${item.name} - ${selectedSize.label}`,
+      category: item.category,
+      selectedSize: selectedSize.id,
+      pieces: selectedSize.pieces,
+      unitPrice: selectedSize.price,
+      selectedPieces: selectedPieces.length > 0 ? selectedPieces.join('، ') : undefined,
+      pieceDistribution: currentDistribution,
+    };
   };
 
   return (
@@ -185,6 +281,71 @@ function MahasshiSizedCard({
           </div>
         )}
 
+        {/* Per-type piece distribution — only when 2+ types selected */}
+        {needsDistribution && (
+          <div
+            className={cn(
+              "mb-4 rounded-xl border border-primary/20 bg-primary/5 p-3 transition-all duration-300",
+              showDistWarning && !distributionValid && "ring-2 ring-red-400/70 ring-offset-2 ring-offset-card animate-pulse",
+            )}
+          >
+            <div className="flex items-center justify-between mb-2 gap-2">
+              <p className="text-xs font-semibold text-primary">حدد عدد الحبات لكل نوع:</p>
+              <span
+                className={cn(
+                  "text-xs font-bold tabular-nums",
+                  distributionValid ? "text-primary" : "text-red-400",
+                )}
+              >
+                {distributionSum} / {totalPieces}
+              </span>
+            </div>
+            <p className="text-[11px] text-muted-foreground mb-3">
+              يجب أن يساوي مجموع الحبات العدد المختار
+            </p>
+            <div className="flex flex-col gap-1.5">
+              {selectedPieces.map(piece => {
+                const value = distribution[piece] ?? 0;
+                return (
+                  <div
+                    key={piece}
+                    className="flex items-center justify-between gap-2 bg-background border border-border/50 rounded-xl px-3 py-1.5"
+                  >
+                    <span className="text-sm font-bold text-foreground truncate">{piece}</span>
+                    <div className="flex items-center gap-2 bg-card rounded-full p-1 border border-border/40 shrink-0">
+                      <button
+                        type="button"
+                        aria-label={`إنقاص ${piece}`}
+                        onClick={() => adjustDistribution(piece, -1)}
+                        disabled={value <= 0}
+                        className="w-7 h-7 rounded-full bg-background flex items-center justify-center text-foreground hover:bg-muted transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                      >
+                        <Minus className="w-3.5 h-3.5" />
+                      </button>
+                      <span className="font-bold w-6 text-center text-sm tabular-nums">{value}</span>
+                      <button
+                        type="button"
+                        aria-label={`زيادة ${piece}`}
+                        onClick={() => adjustDistribution(piece, +1)}
+                        disabled={value >= totalPieces}
+                        className="w-7 h-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                      >
+                        <Plus className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            {showDistWarning && !distributionValid && (
+              <p className="mt-2 text-xs font-bold text-red-400 flex items-center gap-1.5">
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-red-400" />
+                يجب أن يساوي مجموع الحبات العدد المختار
+              </p>
+            )}
+          </div>
+        )}
+
         <div className="flex justify-between items-center pt-3 border-t border-border/30">
           <div>
             <p className="text-xs text-muted-foreground mb-0.5">السعر</p>
@@ -207,16 +368,14 @@ function MahasshiSizedCard({
               <button
                 onClick={() => {
                   if (!selectedSize) return;
-                  onAdd({
-                    itemId: item.id,
-                    name: `${item.name} - ${selectedSize.label}`,
-                    category: item.category,
-                    selectedSize: selectedSize.id,
-                    pieces: selectedSize.pieces,
-                    unitPrice: selectedSize.price,
-                    selectedPieces: selectedPieces.length > 0 ? selectedPieces.join('، ') : undefined,
-                  });
-                  onUpdateQty(cartItemId, 1);
+                  if (needsDistribution && !distributionValid) {
+                    setShowDistWarning(true);
+                    toast.error('يجب أن يساوي مجموع الحبات العدد المختار');
+                    return;
+                  }
+                  const payload = buildCartPayload();
+                  if (!payload) return;
+                  onAdd(payload);
                   toast.success('تم تحديث الكمية');
                 }}
                 className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/90 transition-colors"
@@ -238,15 +397,14 @@ function MahasshiSizedCard({
                   toast.error('اختر نوع الحبات أولاً');
                   return;
                 }
-                onAdd({
-                  itemId: item.id,
-                  name: `${item.name} - ${selectedSize.label}`,
-                  category: item.category,
-                  selectedSize: selectedSize.id,
-                  pieces: selectedSize.pieces,
-                  unitPrice: selectedSize.price,
-                  selectedPieces: selectedPieces.length > 0 ? selectedPieces.join('، ') : undefined,
-                });
+                if (needsDistribution && !distributionValid) {
+                  setShowDistWarning(true);
+                  toast.error('يجب أن يساوي مجموع الحبات العدد المختار');
+                  return;
+                }
+                const payload = buildCartPayload();
+                if (!payload) return;
+                onAdd(payload);
                 toast.success('تمت إضافة الصنف إلى السلة');
               }}
               className="rounded-full px-8 h-12 font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-md shadow-primary/20 text-base transition-all active:scale-95"
