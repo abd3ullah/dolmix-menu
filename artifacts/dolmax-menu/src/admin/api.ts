@@ -54,6 +54,7 @@ export type AdminItem = {
   requiresSize: boolean;
   pieceOptionsEnabled: boolean;
   pieceOptionsRequired: boolean;
+  isFeatured: boolean;
 };
 
 export type AdminSize = {
@@ -84,16 +85,35 @@ export function imageSrc(url: string | null | undefined): string {
   return url;
 }
 
+const MAX_UPLOAD_BYTES = 5 * 1024 * 1024; // keep in sync with server-side cap
+const ALLOWED_CONTENT_TYPE = /^image\/(png|jpe?g|webp|gif|avif)$/i;
+
 export async function uploadImage(file: File): Promise<string> {
+  if (file.size > MAX_UPLOAD_BYTES) {
+    throw new Error("الحد الأقصى للصورة 5 ميغابايت");
+  }
+  const contentType = file.type || "application/octet-stream";
+  if (!ALLOWED_CONTENT_TYPE.test(contentType)) {
+    throw new Error("نوع الملف يجب أن يكون صورة (PNG/JPG/WebP/GIF/AVIF)");
+  }
+
   const presign = await api.post<{ uploadURL: string; objectPath: string }>(
     "/storage/uploads/request-url",
-    { name: file.name, size: file.size, contentType: file.type || "application/octet-stream" }
+    { name: file.name, size: file.size, contentType }
   );
   const put = await fetch(presign.uploadURL, {
     method: "PUT",
-    headers: { "Content-Type": file.type || "application/octet-stream" },
+    headers: { "Content-Type": contentType },
     body: file,
   });
   if (!put.ok) throw new Error("فشل رفع الصورة");
+
+  // Mark the upload as publicly readable so the public menu can display it.
+  // We surface errors here so the admin sees a real failure instead of saving
+  // an item that points to a non-public object. The legacy null-ACL "treat as
+  // public" rule on the server only exists for objects uploaded *before*
+  // finalize existed — it is not a fallback for failed finalize calls.
+  await api.post("/storage/uploads/finalize", { objectPath: presign.objectPath });
+
   return presign.objectPath;
 }

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import type { MenuItem } from '../data/menuData';
 
 export type CartItem = {
   id: string;
@@ -61,6 +62,49 @@ export function useCart() {
     return items.find(i => i.id === id)?.quantity || 0;
   }, [items]);
 
+  /**
+   * Reconcile the cart against the live menu:
+   * - drops items whose menu entry no longer exists or is hidden
+   * - drops sized items whose selected size is no longer offered
+   * - refreshes unit prices when the live menu price has changed
+   * Returns a summary of the changes for the caller to surface to the user.
+   */
+  const reconcile = useCallback(
+    (menu: MenuItem[]): { removed: string[]; repriced: string[] } => {
+      const removed: string[] = [];
+      const repriced: string[] = [];
+      setItems((prev) => {
+        const next: CartItem[] = [];
+        for (const ci of prev) {
+          const item = menu.find((m) => m.id === ci.itemId);
+          if (!item) {
+            removed.push(ci.name);
+            continue;
+          }
+          let unitPrice = ci.unitPrice;
+          if (ci.selectedSize) {
+            const sz = item.sizes?.find((s) => s.id === ci.selectedSize);
+            if (!sz) {
+              removed.push(ci.name);
+              continue;
+            }
+            if (sz.price !== ci.unitPrice) {
+              repriced.push(ci.name);
+              unitPrice = sz.price;
+            }
+          } else if (typeof item.price === "number" && item.price !== ci.unitPrice) {
+            repriced.push(ci.name);
+            unitPrice = item.price;
+          }
+          next.push({ ...ci, unitPrice });
+        }
+        return next;
+      });
+      return { removed, repriced };
+    },
+    [],
+  );
+
   const totalItems = items.reduce((acc, item) => acc + item.quantity, 0);
   const totalPrice = items.reduce((acc, item) => acc + (item.quantity * item.unitPrice), 0);
 
@@ -71,6 +115,7 @@ export function useCart() {
     removeFromCart,
     clearCart,
     getItemQuantity,
+    reconcile,
     totalItems,
     totalPrice
   };

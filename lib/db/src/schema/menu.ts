@@ -33,6 +33,7 @@ export const itemsTable = pgTable("items", {
   requiresSize: boolean("requires_size").notNull().default(false),
   pieceOptionsEnabled: boolean("piece_options_enabled").notNull().default(false),
   pieceOptionsRequired: boolean("piece_options_required").notNull().default(false),
+  isFeatured: boolean("is_featured").notNull().default(false),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 

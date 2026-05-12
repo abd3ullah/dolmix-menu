@@ -1,7 +1,7 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { Switch, Route, Router as WouterRouter } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Toaster } from "sonner";
+import { Toaster, toast } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 
@@ -34,18 +34,10 @@ import { AdminApp } from "./admin/AdminApp";
 
 const queryClient = new QueryClient();
 
-const SECTION_IDS = [
-  "grape_leaves",
-  "mahashi",
-  "dolma",
-  "sauces",
-  "fatta",
-  "pilav",
-  "fettuccine",
-  "drinks",
-  "refreshing",
-  "about",
-];
+// Categories rendered as on-page sections, plus the static "about" anchor at
+// the bottom. The active scroll-spy list is computed dynamically from the live
+// menu payload so newly added/removed categories work without a code change.
+const STATIC_TRAILING_SECTIONS = ["about"] as const;
 
 function MenuApp() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -55,6 +47,30 @@ function MenuApp() {
   const cart = useCart();
   const { data: menuPayload, isLoading: menuLoading } = useMenu();
   const menuData: MenuItem[] = menuPayload?.items ?? [];
+  const sectionIds = useMemo(
+    () => [
+      ...(menuPayload?.categories ?? []).map((c) => c.id),
+      ...STATIC_TRAILING_SECTIONS,
+    ],
+    [menuPayload?.categories],
+  );
+
+  // Reconcile the persisted cart against the live menu the first time it loads.
+  // This handles items deleted/hidden by the admin or repriced since the cart
+  // was last saved in localStorage.
+  const reconcileRef = useRef(false);
+  useEffect(() => {
+    if (reconcileRef.current) return;
+    if (!menuPayload || menuData.length === 0) return;
+    reconcileRef.current = true;
+    const { removed, repriced } = cart.reconcile(menuData);
+    if (removed.length > 0) {
+      toast.info(`تم تحديث السلة: حُذف ${removed.length} صنف لم يعد متاحاً`);
+    }
+    if (repriced.length > 0) {
+      toast.info(`تم تحديث الأسعار في السلة (${repriced.length} صنف)`);
+    }
+  }, [menuPayload, menuData, cart]);
 
   const handleSelectCategory = (category: string) => {
     setActiveCategory(category);
@@ -80,12 +96,12 @@ function MenuApp() {
       },
       { rootMargin: '-100px 0px -55% 0px' }
     );
-    SECTION_IDS.forEach((id) => {
+    sectionIds.forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
     return () => observer.disconnect();
-  }, []);
+  }, [sectionIds]);
 
   const filteredData = useMemo(() => {
     if (!searchQuery.trim()) return menuData;
@@ -97,10 +113,11 @@ function MenuApp() {
 
   const byCategory = (cat: string) => filteredData.filter(i => i.category === cat);
 
-  const featuredItems = [
-    menuData.find(i => i.id === 'm2'),
-    menuData.find(i => i.id === 'g2'),
-  ].filter((x): x is MenuItem => Boolean(x));
+  // Featured items are flagged in the database (items.is_featured) and surfaced
+  // by the API as `featured: true`. This replaces the previous hard-coded
+  // legacy-id lookup so the admin can change which items are featured without
+  // a redeploy.
+  const featuredItems = menuData.filter((i) => i.featured);
 
   const noResults = searchQuery.trim() && filteredData.length === 0;
 

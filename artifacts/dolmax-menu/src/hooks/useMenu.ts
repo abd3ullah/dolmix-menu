@@ -13,7 +13,8 @@ export function useMenu() {
   return useQuery<MenuPayload>({
     queryKey: ["public-menu"],
     queryFn: async () => {
-      const r = await fetch("/api/menu", { credentials: "include" });
+      // Public menu — no credentials needed; sending them just adds CORS friction.
+      const r = await fetch("/api/menu");
       if (!r.ok) throw new Error("Failed to load menu");
       return r.json();
     },

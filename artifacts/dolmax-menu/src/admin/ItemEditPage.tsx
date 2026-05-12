@@ -23,6 +23,7 @@ type Form = {
   requiresSize: boolean;
   pieceOptionsEnabled: boolean;
   pieceOptionsRequired: boolean;
+  isFeatured: boolean;
 };
 
 const empty: Form = {
@@ -36,6 +37,7 @@ const empty: Form = {
   requiresSize: false,
   pieceOptionsEnabled: false,
   pieceOptionsRequired: false,
+  isFeatured: false,
 };
 
 export function ItemEditPage() {
@@ -70,6 +72,7 @@ export function ItemEditPage() {
         requiresSize: existing.requiresSize,
         pieceOptionsEnabled: existing.pieceOptionsEnabled,
         pieceOptionsRequired: existing.pieceOptionsRequired,
+        isFeatured: existing.isFeatured ?? false,
       });
     } else if (isNew && cats && form.categoryId === null && cats[0]) {
       setForm((f) => ({ ...f, categoryId: cats[0]!.id }));
@@ -90,6 +93,7 @@ export function ItemEditPage() {
         requiresSize: form.requiresSize,
         pieceOptionsEnabled: form.pieceOptionsEnabled,
         pieceOptionsRequired: form.pieceOptionsRequired,
+        isFeatured: form.isFeatured,
       };
       if (isNew) return api.post<AdminItem>("/admin/items", body);
       return api.patch<AdminItem>(`/admin/items/${itemId}`, body);
@@ -150,6 +154,7 @@ export function ItemEditPage() {
         </Field>
 
         <Toggle label="إخفاء من القائمة العامة" value={form.hidden} onChange={(v) => setForm({ ...form, hidden: v })} />
+        <Toggle label="عرض في «الأطباق المميزة»" value={form.isFeatured} onChange={(v) => setForm({ ...form, isFeatured: v })} />
         <Toggle label="تفعيل الأحجام" value={form.sizesEnabled} onChange={(v) => setForm({ ...form, sizesEnabled: v })} />
         {form.sizesEnabled && (
           <Toggle label="اختيار الحجم إجباري" value={form.requiresSize} onChange={(v) => setForm({ ...form, requiresSize: v })} />

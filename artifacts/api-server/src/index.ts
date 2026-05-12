@@ -1,6 +1,7 @@
 import app from "./app";
 import { logger } from "./lib/logger";
 import { seedIfEmpty } from "./lib/seed";
+import { ensureSchema } from "./lib/ensureSchema";
 
 const rawPort = process.env["PORT"];
 if (!rawPort) {
@@ -25,6 +26,10 @@ function assertProductionSecrets(): void {
 
 async function start(): Promise<void> {
   assertProductionSecrets();
+  // Schema guards must succeed before we accept traffic — if the DB is missing
+  // a column that menu/admin queries reference, fail loudly here instead of
+  // serving 500s on every request.
+  await ensureSchema();
   try {
     await seedIfEmpty();
   } catch (err) {

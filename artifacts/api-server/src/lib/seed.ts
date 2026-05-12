@@ -20,6 +20,7 @@ type SeedItem = {
   sizes?: SeedSize[];
   pieceOptions?: string[];
   requiresSize?: boolean;
+  isFeatured?: boolean;
 };
 
 const CATEGORIES = [
@@ -76,6 +77,7 @@ const ITEMS: SeedItem[] = [
   },
   {
     legacyId: "m2",
+    isFeatured: true,
     name: "مشكل دبس الرمان مع لحم",
     description: "الحبات اختياري: ورق عنب، بصل، شجر، بطاطا، فلفل، باذنجان، لهانة",
     categorySlug: "mahashi",
@@ -126,6 +128,7 @@ const ITEMS: SeedItem[] = [
       categorySlug: "grape_leaves",
       imageUrl: img(imgs[idx]!),
       sizes: STANDARD_SIZES(3000),
+      isFeatured: id === "g2",
     } as SeedItem;
   }),
 
@@ -233,6 +236,7 @@ export async function seedIfEmpty(): Promise<void> {
         requiresSize: !!it.requiresSize,
         pieceOptionsEnabled: !!(it.pieceOptions && it.pieceOptions.length > 0),
         pieceOptionsRequired: false,
+        isFeatured: !!it.isFeatured,
       })
       .returning();
     const itemId = row!.id;

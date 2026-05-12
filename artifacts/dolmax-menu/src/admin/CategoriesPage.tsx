@@ -5,6 +5,28 @@ import { api, type AdminCategory } from "./api";
 import { AdminShell } from "./Layout";
 import { toast } from "sonner";
 
+// Lightweight Arabic→Latin transliteration so admins can leave the slug field
+// blank and still get a human-readable URL identifier instead of `cat-<ts>`.
+const AR_MAP: Record<string, string> = {
+  ا: "a", أ: "a", إ: "i", آ: "a", ب: "b", ت: "t", ث: "th", ج: "j", ح: "h",
+  خ: "kh", د: "d", ذ: "th", ر: "r", ز: "z", س: "s", ش: "sh", ص: "s", ض: "d",
+  ط: "t", ظ: "z", ع: "a", غ: "gh", ف: "f", ق: "q", ك: "k", ل: "l", م: "m",
+  ن: "n", ه: "h", و: "w", ي: "y", ى: "a", ة: "h", ء: "", ؤ: "w", ئ: "y", پ: "p",
+};
+function autoSlug(input: string): string {
+  const base = input
+    .trim()
+    .split("")
+    .map((ch) => AR_MAP[ch] ?? ch)
+    .join("")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  if (base.length >= 2) return base.slice(0, 40);
+  // fall back to a short readable id when transliteration produced nothing
+  return `cat-${Math.random().toString(36).slice(2, 8)}`;
+}
+
 export function CategoriesPage() {
   const qc = useQueryClient();
   const { data, isLoading } = useQuery({
@@ -21,7 +43,7 @@ export function CategoriesPage() {
   const addMut = useMutation({
     mutationFn: () =>
       api.post<AdminCategory>("/admin/categories", {
-        slug: newSlug || `cat-${Date.now()}`,
+        slug: newSlug || autoSlug(newName),
         nameAr: newName,
       }),
     onSuccess: () => {

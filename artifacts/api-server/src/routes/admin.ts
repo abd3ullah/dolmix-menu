@@ -53,7 +53,13 @@ router.post("/admin/categories", async (req, res) => {
       .returning();
     res.json(row);
   } catch (e) {
-    res.status(400).json({ error: "اللاحقة موجودة سابقاً" });
+    const msg = e instanceof Error ? e.message : "";
+    if (/duplicate|unique/i.test(msg)) {
+      res.status(409).json({ error: "اللاحقة موجودة سابقاً" });
+      return;
+    }
+    req.log.error({ err: e }, "Failed to create category");
+    res.status(500).json({ error: "تعذّر إنشاء القسم" });
   }
 });
 
@@ -91,10 +97,12 @@ router.post("/admin/categories/reorder", async (req, res) => {
     res.status(400).json({ error: "بيانات غير صحيحة" });
     return;
   }
-  for (let i = 0; i < parsed.data.orderedIds.length; i++) {
-    const id = parsed.data.orderedIds[i]!;
-    await db.update(categoriesTable).set({ displayOrder: i }).where(eq(categoriesTable.id, id));
-  }
+  await db.transaction(async (tx) => {
+    for (let i = 0; i < parsed.data.orderedIds.length; i++) {
+      const id = parsed.data.orderedIds[i]!;
+      await tx.update(categoriesTable).set({ displayOrder: i }).where(eq(categoriesTable.id, id));
+    }
+  });
   res.json({ ok: true });
 });
 
@@ -142,6 +150,7 @@ const ItemBody = z.object({
   requiresSize: z.boolean().optional(),
   pieceOptionsEnabled: z.boolean().optional(),
   pieceOptionsRequired: z.boolean().optional(),
+  isFeatured: z.boolean().optional(),
 });
 
 router.post("/admin/items", async (req, res) => {
@@ -190,10 +199,12 @@ router.post("/admin/items/reorder", async (req, res) => {
     res.status(400).json({ error: "بيانات غير صحيحة" });
     return;
   }
-  for (let i = 0; i < parsed.data.orderedIds.length; i++) {
-    const id = parsed.data.orderedIds[i]!;
-    await db.update(itemsTable).set({ displayOrder: i }).where(eq(itemsTable.id, id));
-  }
+  await db.transaction(async (tx) => {
+    for (let i = 0; i < parsed.data.orderedIds.length; i++) {
+      const id = parsed.data.orderedIds[i]!;
+      await tx.update(itemsTable).set({ displayOrder: i }).where(eq(itemsTable.id, id));
+    }
+  });
   res.json({ ok: true });
 });
 
@@ -249,10 +260,12 @@ router.post("/admin/sizes/reorder", async (req, res) => {
     res.status(400).json({ error: "بيانات غير صحيحة" });
     return;
   }
-  for (let i = 0; i < parsed.data.orderedIds.length; i++) {
-    const id = parsed.data.orderedIds[i]!;
-    await db.update(sizesTable).set({ displayOrder: i }).where(eq(sizesTable.id, id));
-  }
+  await db.transaction(async (tx) => {
+    for (let i = 0; i < parsed.data.orderedIds.length; i++) {
+      const id = parsed.data.orderedIds[i]!;
+      await tx.update(sizesTable).set({ displayOrder: i }).where(eq(sizesTable.id, id));
+    }
+  });
   res.json({ ok: true });
 });
 

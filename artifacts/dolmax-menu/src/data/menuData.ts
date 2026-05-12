@@ -18,6 +18,7 @@ export type MenuItem = {
   requiresSize?: boolean;
   category: MenuCategory;
   image: string;
+  featured?: boolean;
 };
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');

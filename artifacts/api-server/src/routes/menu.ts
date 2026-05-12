@@ -66,6 +66,7 @@ router.get("/menu", async (_req, res) => {
         image: resolveImage(i.imageUrl),
         requiresSize: i.requiresSize,
         pieceOptionsRequired: i.pieceOptionsRequired,
+        featured: i.isFeatured,
         sizes: sizes.length
           ? sizes.map((s) => ({
               id: s.legacyId || `size-${s.id}`,
