@@ -35,14 +35,14 @@ const CATEGORIES = [
   { slug: "refreshing", nameAr: "مشروبات منعشه" },
 ];
 
-const STANDARD_SIZES = (basePrice: number): SeedSize[] => [
-  { legacyId: "s_m", label: "M", pieces: 7, price: basePrice },
-  { legacyId: "s_l", label: "L", pieces: 20, price: Math.round(basePrice * 2.67) },
-  { legacyId: "s_xl", label: "XL", pieces: 40, price: Math.round(basePrice * 5) },
-  { legacyId: "s_xxl", label: "XXL", pieces: 60, price: Math.round(basePrice * 7.67) },
-  { legacyId: "s_dolmax", label: "طبق DOLMIX", pieces: 14, price: Math.round(basePrice * 1.67) },
-  { legacyId: "s_party", label: "صينية الضيافة", pieces: 70, price: Math.round(basePrice * 8.33) },
-  { legacyId: "s_happy", label: "بوكس السعادة", pieces: 50, price: Math.round(basePrice * 6.33) },
+const STANDARD_SIZES = (_basePrice: number): SeedSize[] => [
+  { legacyId: "s_m", label: "M", pieces: 7, price: 3000 },
+  { legacyId: "s_l", label: "L", pieces: 20, price: 8000 },
+  { legacyId: "s_xl", label: "XL", pieces: 40, price: 15000 },
+  { legacyId: "s_xxl", label: "XXL", pieces: 60, price: 23000 },
+  { legacyId: "s_dolmax", label: "طبق DOLMIX", pieces: 14, price: 5000 },
+  { legacyId: "s_party", label: "صينية الضيافة", pieces: 70, price: 25000 },
+  { legacyId: "s_happy", label: "بوكس السعادة", pieces: 50, price: 19000 },
 ];
 
 const img = (n: string) => `/images/${n}`;
