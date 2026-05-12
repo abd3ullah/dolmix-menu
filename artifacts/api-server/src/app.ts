@@ -66,7 +66,10 @@ try {
   store = new PgStore({
     pool,
     tableName: "user_sessions",
-    createTableIfMissing: true,
+    // Session table is created by ensureSchema() at boot; we don't rely on
+    // connect-pg-simple's auto-create path because it tries to readFile a
+    // table.sql that isn't in the esbuild bundle (ENOENT in production).
+    createTableIfMissing: false,
     pruneSessionInterval: 60 * 60, // every hour
   });
   logger.info("Session store: connect-pg-simple");
