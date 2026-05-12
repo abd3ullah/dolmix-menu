@@ -104,6 +104,9 @@ export function CartDrawer({ open, onOpenChange, cart }: CartDrawerProps) {
       if (item.selectedPieces) {
         orderText += `   الحبات المختارة: ${item.selectedPieces}\n`;
       }
+      if (index < items.length - 1) {
+        orderText += `\n`;
+      }
     });
 
     orderText += `\nالمجموع الكلي: ${formatPrice(totalPrice)}\n`;
