@@ -88,20 +88,20 @@ export function CartDrawer({ open, onOpenChange, cart }: CartDrawerProps) {
     items.forEach((item, index) => {
       orderText += `${index + 1}. ${item.name} × ${item.quantity} = ${formatPrice(item.unitPrice * item.quantity)}\n`;
       if (item.selectedPieces) {
-        orderText += `   الحبات: ${item.selectedPieces}\n`;
+        orderText += `   - الحبات المختارة: ${item.selectedPieces}\n`;
       }
     });
 
     orderText += `\nالمجموع الكلي: ${formatPrice(totalPrice)}\n`;
 
+    if (notes) {
+      orderText += `\nملاحظات:\n${notes}\n`;
+    }
+
     if (hasAutoLocation && locationData) {
       orderText += `\n📍 الموقع:\n${locationData.mapsUrl}\n`;
     } else if (hasManualLocation) {
       orderText += `\n📍 الموقع:\n${manualLocation.trim()}\n`;
-    }
-
-    if (notes) {
-      orderText += `\nملاحظات:\n${notes}\n`;
     }
 
     const encodedText = encodeURIComponent(orderText);
