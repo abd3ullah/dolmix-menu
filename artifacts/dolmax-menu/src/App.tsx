@@ -22,6 +22,7 @@ import { CartDrawer } from "./components/CartDrawer";
 import { FloatingCartButton } from "./components/FloatingCartButton";
 import { FixedActionButtons } from "./components/FixedActionButtons";
 import { DecorSlider } from "./components/DecorSlider";
+import { ServiceTypeGate, type ServiceInfo } from "./components/ServiceTypeGate";
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 const DECOR_IMAGES = [1, 2, 3, 4].map(n => `${BASE}/images/decor-${n}.jpg`);
@@ -48,7 +49,12 @@ function MenuApp() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [serviceInfo, setServiceInfo] = useState<ServiceInfo | null>(null);
   const cart = useCart();
+
+  if (!serviceInfo) {
+    return <ServiceTypeGate onComplete={setServiceInfo} />;
+  }
 
   const handleSelectCategory = (category: string) => {
     setActiveCategory(category);
@@ -241,6 +247,7 @@ function MenuApp() {
         open={isCartOpen}
         onOpenChange={setIsCartOpen}
         cart={cart}
+        serviceInfo={serviceInfo}
       />
     </div>
   );

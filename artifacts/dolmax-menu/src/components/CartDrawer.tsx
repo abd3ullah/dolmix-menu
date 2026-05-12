@@ -7,11 +7,13 @@ import { Minus, Plus, Trash2, ShoppingBag, MapPin, Loader2, CheckCircle2, AlertC
 import { useCart } from '../hooks/useCart';
 import { formatPrice } from '../lib/format';
 import { toast } from 'sonner';
+import type { ServiceInfo } from './ServiceTypeGate';
 
 interface CartDrawerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   cart: ReturnType<typeof useCart>;
+  serviceInfo: ServiceInfo;
 }
 
 type LocationState = 'idle' | 'loading' | 'success' | 'error';
@@ -22,8 +24,9 @@ interface LocationData {
   mapsUrl: string;
 }
 
-export function CartDrawer({ open, onOpenChange, cart }: CartDrawerProps) {
+export function CartDrawer({ open, onOpenChange, cart, serviceInfo }: CartDrawerProps) {
   const { items, updateQuantity, removeFromCart, clearCart, totalPrice } = cart;
+  const isDineIn = serviceInfo.serviceType === 'صالة';
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -75,12 +78,18 @@ export function CartDrawer({ open, onOpenChange, cart }: CartDrawerProps) {
     const hasAutoLocation = locationState === 'success' && locationData;
     const hasManualLocation = manualLocation.trim().length > 0;
 
-    if (!hasAutoLocation && !hasManualLocation) {
+    if (!isDineIn && !hasAutoLocation && !hasManualLocation) {
       toast.error('يرجى تحديد موقعك أو إدخاله يدوياً قبل إرسال الطلب');
       return;
     }
 
     let orderText = `🌿 طلب جديد من DOLMIX\n\n`;
+    orderText += `━━━━━━━━━━━━━━━━━━\n`;
+    orderText += `📌 نوع الخدمة: ${serviceInfo.serviceType}\n`;
+    if (isDineIn && serviceInfo.tableNumber !== undefined) {
+      orderText += `🪑 رقم الطاولة: ${serviceInfo.tableNumber}\n`;
+    }
+    orderText += `━━━━━━━━━━━━━━━━━━\n\n`;
     orderText += `الاسم: ${name}\n`;
     orderText += `رقم الهاتف: ${phone}\n\n`;
     orderText += `الطلبات:\n`;
@@ -115,10 +124,12 @@ export function CartDrawer({ open, onOpenChange, cart }: CartDrawerProps) {
       orderText += `\nملاحظات:\n${notes}\n`;
     }
 
-    if (hasAutoLocation && locationData) {
-      orderText += `\n📍 الموقع:\n${locationData.mapsUrl}\n`;
-    } else if (hasManualLocation) {
-      orderText += `\n📍 الموقع:\n${manualLocation.trim()}\n`;
+    if (!isDineIn) {
+      if (hasAutoLocation && locationData) {
+        orderText += `\n📍 الموقع:\n${locationData.mapsUrl}\n`;
+      } else if (hasManualLocation) {
+        orderText += `\n📍 الموقع:\n${manualLocation.trim()}\n`;
+      }
     }
 
     const encodedText = encodeURIComponent(orderText);
@@ -226,7 +237,21 @@ export function CartDrawer({ open, onOpenChange, cart }: CartDrawerProps) {
                     dir="rtl"
                   />
 
-                  {/* ── Location Section ── */}
+                  {/* ── Service Type Badge ── */}
+                  <div className="rounded-xl border border-primary/30 bg-primary/5 px-3 py-2 flex items-center justify-between">
+                    <span className="text-xs text-muted-foreground">نوع الخدمة</span>
+                    <span className="text-sm font-bold text-primary">
+                      {serviceInfo.serviceType}
+                      {isDineIn && serviceInfo.tableNumber !== undefined && (
+                        <span className="mr-2 text-xs text-muted-foreground font-normal">
+                          (طاولة رقم {serviceInfo.tableNumber})
+                        </span>
+                      )}
+                    </span>
+                  </div>
+
+                  {/* ── Location Section (delivery / takeaway only) ── */}
+                  {!isDineIn && (
                   <div className="rounded-xl border border-border/60 bg-background overflow-hidden">
                     <div className="flex items-center gap-2 px-3 py-2 border-b border-border/40 bg-card/50">
                       <MapPin className="w-4 h-4 text-primary shrink-0" />
@@ -290,6 +315,7 @@ export function CartDrawer({ open, onOpenChange, cart }: CartDrawerProps) {
                       )}
                     </div>
                   </div>
+                  )}
 
                   <Textarea
                     placeholder="ملاحظات إضافية (اختياري)"
