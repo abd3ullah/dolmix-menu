@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Minus, Plus, Trash2, ShoppingBag, MapPin, Loader2, CheckCircle2, AlertCircle, Navigation, X } from 'lucide-react';
 import { useCart } from '../hooks/useCart';
+import { useMenu } from '../hooks/useMenu';
 import { formatPrice } from '../lib/format';
 import { toast } from 'sonner';
 import type { ServiceInfo } from './ServiceTypeGate';
@@ -27,6 +28,9 @@ interface LocationData {
 export function CartDrawer({ open, onOpenChange, cart, serviceInfo }: CartDrawerProps) {
   const { items, updateQuantity, removeFromCart, clearCart, totalPrice } = cart;
   const isDineIn = serviceInfo.serviceType === 'صالة';
+  const { data: menu } = useMenu();
+  const whatsappNumber =
+    ((menu?.settings ?? {}) as { whatsapp_number?: string }).whatsapp_number || '9647706101600';
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -133,7 +137,7 @@ export function CartDrawer({ open, onOpenChange, cart, serviceInfo }: CartDrawer
     }
 
     const encodedText = encodeURIComponent(orderText);
-    window.open(`https://wa.me/9647719461693?text=${encodedText}`, '_blank');
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodedText}`, '_blank');
   };
 
   return (

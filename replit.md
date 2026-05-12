@@ -44,9 +44,27 @@ See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and pa
 - Real-time search, toast notifications, sticky category nav
 - Mobile-first responsive design
 
+**Admin Panel** (at `/admin`):
+- Login: `admin` / `dolmix2026` (override via `ADMIN_USER` / `ADMIN_PASS` env vars)
+- Dashboard with 4 tiles: categories, items, images, settings
+- Full CRUD + reorder + hide/show for categories, items, sizes, piece options
+- Image upload via presigned URLs (object storage) or paste URL
+- Settings: restaurant name, WhatsApp number, phone number
+- All edits go live on the public menu instantly (react-query invalidation)
+
+**Backend** (api-server):
+- DB-backed menu in PostgreSQL (Drizzle): `categoriesTable`, `itemsTable`, `sizesTable`, `pieceOptionsTable`, `settingsTable`
+- Public `GET /api/menu` returns full menu (visible only) + settings
+- Admin routes under `/api/admin/*` gated by express-session (memorystore, cookie `dolmix.sid`)
+- Auto-seeds initial menu on first boot if DB is empty
+- Object storage paths (`/objects/...`) auto-resolved to `/api/storage/objects/...`
+
 **Key files**:
-- `src/data/menuData.ts` — all menu data (items, sizes, prices)
+- `src/data/menuData.ts` — MenuItem TypeScript types (data now from API)
+- `src/hooks/useMenu.ts` — react-query fetcher for public menu
+- `src/admin/` — admin panel pages and shared API client
 - `src/hooks/useCart.ts` — cart state with localStorage sync
 - `src/components/CartDrawer.tsx` — cart + checkout form
-- `src/components/FloatingCartButton.tsx` — floating cart CTA
 - `src/index.css` — premium green/gold theme variables
+- `artifacts/api-server/src/lib/seed.ts` — initial menu seed
+- `artifacts/api-server/src/routes/{auth,menu,admin,storage}.ts` — backend routes

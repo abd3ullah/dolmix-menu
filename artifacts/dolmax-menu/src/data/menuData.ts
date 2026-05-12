@@ -5,7 +5,7 @@ export type SizeOption = {
   price: number;
 };
 
-export type MenuCategory = 'fatta' | 'mahashi' | 'grape_leaves' | 'dolma' | 'drinks' | 'sauces' | 'refreshing' | 'pilav' | 'fettuccine';
+export type MenuCategory = string;
 
 export type MenuItem = {
   id: string;
@@ -14,6 +14,7 @@ export type MenuItem = {
   price?: number;
   sizes?: SizeOption[];
   pieceOptions?: string[];
+  pieceOptionsRequired?: boolean;
   requiresSize?: boolean;
   category: MenuCategory;
   image: string;

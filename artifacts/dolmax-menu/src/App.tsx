@@ -27,8 +27,10 @@ import { ServiceTypeGate, type ServiceInfo } from "./components/ServiceTypeGate"
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 const DECOR_IMAGES = [1, 2, 3, 4].map(n => `${BASE}/images/decor-${n}.jpg`);
 
-import { menuData } from "./data/menuData";
+import type { MenuItem } from "./data/menuData";
 import { useCart } from "./hooks/useCart";
+import { useMenu } from "./hooks/useMenu";
+import { AdminApp } from "./admin/AdminApp";
 
 const queryClient = new QueryClient();
 
@@ -51,6 +53,8 @@ function MenuApp() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [serviceInfo, setServiceInfo] = useState<ServiceInfo | null>(null);
   const cart = useCart();
+  const { data: menuPayload, isLoading: menuLoading } = useMenu();
+  const menuData: MenuItem[] = menuPayload?.items ?? [];
 
   const handleSelectCategory = (category: string) => {
     setActiveCategory(category);
@@ -89,19 +93,27 @@ function MenuApp() {
     return menuData.filter(item =>
       item.name.includes(q) || (item.description && item.description.includes(q))
     );
-  }, [searchQuery]);
+  }, [searchQuery, menuData]);
 
   const byCategory = (cat: string) => filteredData.filter(i => i.category === cat);
 
   const featuredItems = [
-    menuData.find(i => i.id === 'm2')!,
-    menuData.find(i => i.id === 'g2')!,
-  ].filter(Boolean);
+    menuData.find(i => i.id === 'm2'),
+    menuData.find(i => i.id === 'g2'),
+  ].filter((x): x is MenuItem => Boolean(x));
 
   const noResults = searchQuery.trim() && filteredData.length === 0;
 
   if (!serviceInfo) {
     return <ServiceTypeGate onComplete={setServiceInfo} />;
+  }
+
+  if (menuLoading && menuData.length === 0) {
+    return (
+      <div dir="rtl" className="min-h-[100dvh] flex items-center justify-center bg-background text-foreground">
+        <p className="text-primary font-bold">جاري تحميل القائمة…</p>
+      </div>
+    );
   }
 
   return (
@@ -257,6 +269,8 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={MenuApp} />
+      <Route path="/admin/:rest*" component={AdminApp} />
+      <Route path="/admin" component={AdminApp} />
       <Route component={NotFound} />
     </Switch>
   );

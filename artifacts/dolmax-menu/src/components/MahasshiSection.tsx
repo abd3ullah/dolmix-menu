@@ -72,7 +72,8 @@ function MahasshiSizedCard({
   const selectedSize = item.sizes?.find(s => s.id === selectedSizeId);
   const cartItemId = `${item.id}-${selectedSizeId}`;
   const qty = selectedSizeId ? getItemQuantity(cartItemId) : 0;
-  const requiresPiece = !!(item.pieceOptions && item.pieceOptions.length > 0);
+  const hasPieceOptions = !!(item.pieceOptions && item.pieceOptions.length > 0);
+  const requiresPiece = hasPieceOptions && item.pieceOptionsRequired !== false;
 
   const togglePiece = (piece: string) => {
     setSelectedPieces(prev =>
@@ -149,7 +150,7 @@ function MahasshiSizedCard({
         </div>
 
         {/* Piece type selector — only for items that have pieceOptions */}
-        {requiresPiece && (
+        {hasPieceOptions && (
           <div
             className={cn(
               "mb-4 rounded-xl transition-all duration-300",
