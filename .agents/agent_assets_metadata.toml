@@ -1,5 +1,4 @@
 uploads = []
-outputs = []
 
 [[generated]]
 id = "Gfq0SKVcAl4AInZzFOE__"
@@ -120,3 +119,9 @@ id = "ZjvEldS3jWUzSEaUYo1Gh"
 uri = "file://artifacts/dolmax-menu/public/images/drinks-generic.png"
 type = "image"
 title = "cold-drinks"
+
+[[outputs]]
+id = "f8nUwF57KOOpV1Mv4cn_3"
+uri = "file://تقرير-تحليل-المشروع.pdf"
+type = "pdf"
+title = "تقرير تحليل مشروع DOLMIX"
