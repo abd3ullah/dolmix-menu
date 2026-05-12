@@ -86,9 +86,23 @@ export function CartDrawer({ open, onOpenChange, cart }: CartDrawerProps) {
     orderText += `الطلبات:\n`;
 
     items.forEach((item, index) => {
-      orderText += `${index + 1}. ${item.name} × ${item.quantity} = ${formatPrice(item.unitPrice * item.quantity)}\n`;
+      let displayName = item.name;
+      let sizeLabel: string | null = null;
+      if (item.selectedSize) {
+        const sepIdx = item.name.lastIndexOf(' - ');
+        if (sepIdx > -1) {
+          displayName = item.name.slice(0, sepIdx);
+          sizeLabel = item.name.slice(sepIdx + 3);
+        }
+      }
+
+      orderText += `${index + 1}. ${displayName}\n`;
+      if (sizeLabel) {
+        orderText += `   الحجم: ${sizeLabel}\n`;
+      }
+      orderText += `   العدد: ${item.quantity} = ${formatPrice(item.unitPrice * item.quantity)}\n`;
       if (item.selectedPieces) {
-        orderText += `   - الحبات المختارة: ${item.selectedPieces}\n`;
+        orderText += `   الحبات المختارة: ${item.selectedPieces}\n`;
       }
     });
 
