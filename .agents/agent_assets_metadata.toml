@@ -125,3 +125,9 @@ id = "f8nUwF57KOOpV1Mv4cn_3"
 uri = "file://تقرير-تحليل-المشروع.pdf"
 type = "pdf"
 title = "تقرير تحليل مشروع DOLMIX"
+
+[[outputs]]
+id = "aYfCwVbOXIdpGBJ4GRHg3"
+uri = "file://project-analysis-report.pdf"
+type = "pdf"
+title = "DOLMIX Project Analysis Report (English)"
