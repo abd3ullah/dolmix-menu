@@ -28,6 +28,7 @@ interface LocationData {
 export function CartDrawer({ open, onOpenChange, cart, serviceInfo }: CartDrawerProps) {
   const { items, updateQuantity, removeFromCart, clearCart, totalPrice } = cart;
   const isDineIn = serviceInfo.serviceType === 'صالة';
+  const needsLocation = serviceInfo.serviceType === 'توصيل';
   const { data: menu } = useMenu();
   const whatsappNumber =
     ((menu?.settings ?? {}) as { whatsapp_number?: string }).whatsapp_number || '9647706101600';
@@ -82,7 +83,7 @@ export function CartDrawer({ open, onOpenChange, cart, serviceInfo }: CartDrawer
     const hasAutoLocation = locationState === 'success' && locationData;
     const hasManualLocation = manualLocation.trim().length > 0;
 
-    if (!isDineIn && !hasAutoLocation && !hasManualLocation) {
+    if (needsLocation && !hasAutoLocation && !hasManualLocation) {
       toast.error('يرجى تحديد موقعك أو إدخاله يدوياً قبل إرسال الطلب');
       return;
     }
@@ -142,7 +143,7 @@ export function CartDrawer({ open, onOpenChange, cart, serviceInfo }: CartDrawer
       orderText += `\nملاحظات:\n${notes}\n`;
     }
 
-    if (!isDineIn) {
+    if (needsLocation) {
       if (hasAutoLocation && locationData) {
         orderText += `\n📍 الموقع:\n${locationData.mapsUrl}\n`;
       } else if (hasManualLocation) {
@@ -289,8 +290,8 @@ export function CartDrawer({ open, onOpenChange, cart, serviceInfo }: CartDrawer
                     </span>
                   </div>
 
-                  {/* ── Location Section (delivery / takeaway only) ── */}
-                  {!isDineIn && (
+                  {/* ── Location Section (delivery only) ── */}
+                  {needsLocation && (
                   <div className="rounded-xl border border-border/60 bg-background overflow-hidden">
                     <div className="flex items-center gap-2 px-3 py-2 border-b border-border/40 bg-card/50">
                       <MapPin className="w-4 h-4 text-primary shrink-0" />
