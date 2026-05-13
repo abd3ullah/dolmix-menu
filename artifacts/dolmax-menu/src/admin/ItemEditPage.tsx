@@ -42,7 +42,7 @@ const empty: Form = {
 
 export function ItemEditPage() {
   const [, navigate] = useLocation();
-  const [matchEdit, params] = useRoute<{ id: string }>("/admin/items/:id");
+  const [matchEdit, params] = useRoute<{ id: string }>("/items/:id");
   const isNew = !matchEdit || params?.id === "new";
   const itemId = isNew ? null : Number(params?.id);
   const qc = useQueryClient();
@@ -102,13 +102,13 @@ export function ItemEditPage() {
       qc.invalidateQueries({ queryKey: ["admin-items"] });
       qc.invalidateQueries({ queryKey: ["public-menu"] });
       toast.success("تم الحفظ");
-      if (isNew) navigate(`/admin/items/${row.id}`);
+      if (isNew) navigate(`/items/${row.id}`);
     },
     onError: (e: Error) => toast.error(e.message),
   });
 
   return (
-    <AdminShell title={isNew ? "إضافة صنف" : "تعديل صنف"} back="/admin/items">
+    <AdminShell title={isNew ? "إضافة صنف" : "تعديل صنف"} back="/items">
       <div className="space-y-4">
         <Field label="الاسم">
           <input

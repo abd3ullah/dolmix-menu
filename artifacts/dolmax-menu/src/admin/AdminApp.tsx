@@ -24,7 +24,7 @@ function Protected({ children }: { children: React.ReactNode }) {
   const { data, isLoading } = useAuth();
 
   useEffect(() => {
-    if (!isLoading && data && !data.isAdmin) navigate("/admin/login");
+    if (!isLoading && data && !data.isAdmin) navigate("/login");
   }, [data, isLoading, navigate]);
 
   if (isLoading) {
@@ -41,26 +41,26 @@ function Protected({ children }: { children: React.ReactNode }) {
 export function AdminApp() {
   return (
     <Switch>
-      <Route path="/admin/login" component={AdminLogin} />
-      <Route path="/admin">
+      <Route path="/login" component={AdminLogin} />
+      <Route path="/">
         <Protected><AdminDashboard /></Protected>
       </Route>
-      <Route path="/admin/categories">
+      <Route path="/categories">
         <Protected><CategoriesPage /></Protected>
       </Route>
-      <Route path="/admin/items">
+      <Route path="/items">
         <Protected><ItemsPage /></Protected>
       </Route>
-      <Route path="/admin/items/new">
+      <Route path="/items/new">
         <Protected><ItemEditPage /></Protected>
       </Route>
-      <Route path="/admin/items/:id">
+      <Route path="/items/:id">
         <Protected><ItemEditPage /></Protected>
       </Route>
-      <Route path="/admin/images">
+      <Route path="/images">
         <Protected><ImagesPage /></Protected>
       </Route>
-      <Route path="/admin/settings">
+      <Route path="/settings">
         <Protected><SettingsPage /></Protected>
       </Route>
     </Switch>

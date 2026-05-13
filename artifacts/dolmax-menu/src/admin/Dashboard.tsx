@@ -3,10 +3,10 @@ import { LayoutGrid, Utensils, Image as ImageIcon, Settings } from "lucide-react
 import { AdminShell } from "./Layout";
 
 const TILES = [
-  { href: "/admin/categories", label: "إدارة الأقسام", icon: LayoutGrid, color: "from-emerald-500/20 to-emerald-500/5" },
-  { href: "/admin/items", label: "إدارة الأصناف", icon: Utensils, color: "from-amber-500/20 to-amber-500/5" },
-  { href: "/admin/images", label: "إدارة الصور", icon: ImageIcon, color: "from-sky-500/20 to-sky-500/5" },
-  { href: "/admin/settings", label: "الإعدادات", icon: Settings, color: "from-rose-500/20 to-rose-500/5" },
+  { href: "/categories", label: "إدارة الأقسام", icon: LayoutGrid, color: "from-emerald-500/20 to-emerald-500/5" },
+  { href: "/items", label: "إدارة الأصناف", icon: Utensils, color: "from-amber-500/20 to-amber-500/5" },
+  { href: "/images", label: "إدارة الصور", icon: ImageIcon, color: "from-sky-500/20 to-sky-500/5" },
+  { href: "/settings", label: "الإعدادات", icon: Settings, color: "from-rose-500/20 to-rose-500/5" },
 ];
 
 export function AdminDashboard() {

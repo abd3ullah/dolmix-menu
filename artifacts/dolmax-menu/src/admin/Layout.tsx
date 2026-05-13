@@ -5,7 +5,7 @@ import { useQueryClient } from "@tanstack/react-query";
 
 export function AdminShell({
   title,
-  back = "/admin",
+  back = "/",
   children,
 }: {
   title: string;
@@ -20,7 +20,7 @@ export function AdminShell({
       await api.post("/auth/logout");
     } catch {}
     qc.clear();
-    navigate("/admin/login");
+    navigate("/login");
   }
 
   return (

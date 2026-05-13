@@ -18,7 +18,7 @@ export function AdminLogin() {
       await api.post("/auth/login", { username, password });
       qc.invalidateQueries({ queryKey: ["admin-me"] });
       toast.success("تم تسجيل الدخول");
-      navigate("/admin");
+      navigate("/");
     } catch (err) {
       toast.error((err as Error).message || "فشل تسجيل الدخول");
     } finally {

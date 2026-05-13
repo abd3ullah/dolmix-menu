@@ -286,8 +286,9 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={MenuApp} />
-      <Route path="/admin/:rest*" component={AdminApp} />
-      <Route path="/admin" component={AdminApp} />
+      <Route path="/admin" nest>
+        <AdminApp />
+      </Route>
       <Route component={NotFound} />
     </Switch>
   );

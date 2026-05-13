@@ -64,7 +64,7 @@ export function ItemsPage() {
 
   return (
     <AdminShell title="إدارة الأصناف">
-      <Link href="/admin/items/new">
+      <Link href="/items/new">
         <button className="w-full mb-4 py-3 rounded-xl bg-primary text-primary-foreground font-bold flex items-center justify-center gap-2">
           <Plus className="w-5 h-5" />
           إضافة صنف جديد
@@ -124,7 +124,7 @@ export function ItemsPage() {
             >
               {it.hidden ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4 text-primary" />}
             </button>
-            <Link href={`/admin/items/${it.id}`}>
+            <Link href={`/items/${it.id}`}>
               <button className="p-2 rounded-lg hover:bg-muted">
                 <Pencil className="w-4 h-4" />
               </button>

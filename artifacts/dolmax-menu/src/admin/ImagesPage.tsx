@@ -18,7 +18,7 @@ export function ImagesPage() {
       {isLoading && <p className="text-center py-8 text-muted-foreground">جاري التحميل…</p>}
       <div className="grid grid-cols-2 gap-2">
         {data?.map((it) => (
-          <Link key={it.id} href={`/admin/items/${it.id}`}>
+          <Link key={it.id} href={`/items/${it.id}`}>
             <button className="w-full text-right group relative">
               {it.imageUrl ? (
                 <img
