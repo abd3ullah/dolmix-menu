@@ -150,19 +150,34 @@ function MenuApp() {
         className="max-w-md mx-auto mt-2"
         onClick={(e) => {
           const target = e.target as HTMLElement;
-          const img = target.closest('img') as HTMLImageElement | null;
-          if (!img) return;
-          // Skip if image is inside an interactive element (button/link) to
-          // avoid duplicate triggers with existing card actions.
+          // Skip if click came from an interactive control (qty +/-, add btn, links)
           if (target.closest('button, a')) return;
+
+          // Walk up a few levels to find an <img> — either as ancestor OR as a
+          // sibling under a shared wrapper (cards put a gradient overlay above
+          // the image that would otherwise swallow the click).
+          let el: HTMLElement | null = target;
+          let img: HTMLImageElement | null = null;
+          for (let i = 0; i < 5 && el; i++) {
+            if (el.tagName === 'IMG') { img = el as HTMLImageElement; break; }
+            const inner = el.querySelector?.('img') as HTMLImageElement | null;
+            if (inner) { img = inner; break; }
+            el = el.parentElement;
+          }
+          if (!img) return;
+
           const src = img.getAttribute('src') || '';
           const alt = img.getAttribute('alt') || '';
-          // Match by both image src AND alt (=item.name) so items that share
-          // the same image still resolve to the actually-tapped product.
+          // Resolve by alt (=item.name, unique) preferring an exact image match
+          // for cases where two items share a name.
           const found =
-            menuData.find(m => m.name === alt && (m.image === src || m.image === img.src)) ||
+            menuData.find(m => m.name === alt && (m.image === src || m.image === img!.src)) ||
             menuData.find(m => m.name === alt);
-          if (found) setModalItem(found);
+          if (found) {
+            // eslint-disable-next-line no-console
+            console.log('[product-modal] open:', found.name);
+            setModalItem(found);
+          }
         }}
       >
         {noResults ? (
