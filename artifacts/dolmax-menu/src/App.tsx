@@ -23,6 +23,7 @@ import { FloatingCartButton } from "./components/FloatingCartButton";
 import { FixedActionButtons } from "./components/FixedActionButtons";
 import { DecorSlider } from "./components/DecorSlider";
 import { ServiceTypeGate, type ServiceInfo } from "./components/ServiceTypeGate";
+import { ProductDetailsModal } from "./components/ProductDetailsModal";
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 const DECOR_IMAGES = [1, 2, 3, 4].map(n => `${BASE}/images/decor-${n}.jpg`);
@@ -44,6 +45,7 @@ function MenuApp() {
   const [activeCategory, setActiveCategory] = useState('all');
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [serviceInfo, setServiceInfo] = useState<ServiceInfo | null>(null);
+  const [modalItem, setModalItem] = useState<MenuItem | null>(null);
   const cart = useCart();
   const { data: menuPayload, isLoading: menuLoading } = useMenu();
   const menuData: MenuItem[] = menuPayload?.items ?? [];
@@ -144,7 +146,25 @@ function MenuApp() {
         />
       )}
 
-      <main className="max-w-md mx-auto mt-2">
+      <main
+        className="max-w-md mx-auto mt-2"
+        onClick={(e) => {
+          const target = e.target as HTMLElement;
+          const img = target.closest('img') as HTMLImageElement | null;
+          if (!img) return;
+          // Skip if image is inside an interactive element (button/link) to
+          // avoid duplicate triggers with existing card actions.
+          if (target.closest('button, a')) return;
+          const src = img.getAttribute('src') || '';
+          const alt = img.getAttribute('alt') || '';
+          // Match by both image src AND alt (=item.name) so items that share
+          // the same image still resolve to the actually-tapped product.
+          const found =
+            menuData.find(m => m.name === alt && (m.image === src || m.image === img.src)) ||
+            menuData.find(m => m.name === alt);
+          if (found) setModalItem(found);
+        }}
+      >
         {noResults ? (
           <div className="text-center py-20 px-4">
             <div className="w-20 h-20 rounded-full bg-card border border-border/40 flex items-center justify-center mx-auto mb-4">
@@ -277,6 +297,12 @@ function MenuApp() {
         onOpenChange={setIsCartOpen}
         cart={cart}
         serviceInfo={serviceInfo}
+      />
+
+      <ProductDetailsModal
+        item={modalItem}
+        onClose={() => setModalItem(null)}
+        onAdd={cart.addToCart}
       />
     </div>
   );
