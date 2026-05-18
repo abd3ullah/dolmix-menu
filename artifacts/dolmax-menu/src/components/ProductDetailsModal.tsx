@@ -134,8 +134,14 @@ export function ProductDetailsModal({ item, onClose, onAdd }: ProductDetailsModa
           <X className="w-5 h-5" />
         </button>
 
-        {/* Image */}
-        <div className="relative w-full bg-muted shrink-0" style={{ aspectRatio: '4 / 3' }}>
+        {/* Image — tap to close (matches reference video UX) */}
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="إغلاق"
+          className="relative w-full bg-muted shrink-0 block cursor-zoom-out focus:outline-none"
+          style={{ aspectRatio: '4 / 3' }}
+        >
           <img
             src={item.image}
             alt={item.name}
@@ -147,7 +153,7 @@ export function ProductDetailsModal({ item, onClose, onAdd }: ProductDetailsModa
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-          <div className="absolute bottom-3 right-4 left-4 flex items-end justify-between gap-3">
+          <div className="absolute bottom-3 right-4 left-4 flex items-end justify-between gap-3 text-right">
             <h2 className="text-xl font-extrabold text-white drop-shadow-lg leading-tight">{item.name}</h2>
             {!hasSizes && (
               <span className="text-lg font-bold text-primary bg-black/40 px-3 py-1 rounded-full backdrop-blur-md shrink-0">
@@ -155,7 +161,7 @@ export function ProductDetailsModal({ item, onClose, onAdd }: ProductDetailsModa
               </span>
             )}
           </div>
-        </div>
+        </button>
 
         {/* Body */}
         <div className="overflow-y-auto px-4 py-4 space-y-4 flex-1">
