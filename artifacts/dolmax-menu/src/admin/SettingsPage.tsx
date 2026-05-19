@@ -44,7 +44,7 @@ export function SettingsPage() {
             inputMode="tel"
             value={form.whatsapp_number ?? ""}
             onChange={(e) => setForm({ ...form, whatsapp_number: e.target.value.replace(/[^0-9]/g, "") })}
-            placeholder="9647706101600"
+            placeholder="9647719461693"
             className="w-full px-3 py-3 rounded-lg bg-background border border-border outline-none focus:border-primary"
           />
         </Field>
@@ -53,7 +53,7 @@ export function SettingsPage() {
             inputMode="tel"
             value={form.phone_number ?? ""}
             onChange={(e) => setForm({ ...form, phone_number: e.target.value })}
-            placeholder="07706101600"
+            placeholder="07719461693"
             className="w-full px-3 py-3 rounded-lg bg-background border border-border outline-none focus:border-primary"
           />
         </Field>

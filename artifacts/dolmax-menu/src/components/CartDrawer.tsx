@@ -31,7 +31,7 @@ export function CartDrawer({ open, onOpenChange, cart, serviceInfo }: CartDrawer
   const needsLocation = serviceInfo.serviceType === 'توصيل';
   const { data: menu } = useMenu();
   const whatsappNumber =
-    ((menu?.settings ?? {}) as { whatsapp_number?: string }).whatsapp_number || '9647706101600';
+    ((menu?.settings ?? {}) as { whatsapp_number?: string }).whatsapp_number || '9647719461693';
 
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');

@@ -4,8 +4,8 @@ import { useMenu } from '../hooks/useMenu';
 export function FixedActionButtons() {
   const { data } = useMenu();
   const settings = (data?.settings ?? {}) as { whatsapp_number?: string; phone_number?: string };
-  const whatsapp = settings.whatsapp_number || '9647706101600';
-  const phone = settings.phone_number || '07706101600';
+  const whatsapp = settings.whatsapp_number || '9647719461693';
+  const phone = settings.phone_number || '07719461693';
 
   return (
     <div className="fixed safe-bottom-offset-lg left-4 right-4 z-40 flex justify-between pointer-events-none mx-auto max-w-md">

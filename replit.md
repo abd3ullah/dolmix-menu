@@ -39,7 +39,7 @@ See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and pa
 - Dark green premium theme with gold accents
 - Menu sections: الفتة, المحاشي (with size selectors), ورق العنب (with size selectors)
 - Shopping cart with localStorage persistence
-- WhatsApp order checkout (wa.me/9647706101600)
+- WhatsApp order checkout (wa.me/9647719461693)
 - Fixed call/WhatsApp action buttons
 - Real-time search, toast notifications, sticky category nav
 - Mobile-first responsive design

@@ -194,8 +194,8 @@ const ITEMS: SeedItem[] = [
 
 const DEFAULT_SETTINGS = [
   { key: "restaurant_name", value: "دولمكس" },
-  { key: "whatsapp_number", value: "9647706101600" },
-  { key: "phone_number", value: "07706101600" },
+  { key: "whatsapp_number", value: "9647719461693" },
+  { key: "phone_number", value: "07719461693" },
 ];
 
 export async function seedIfEmpty(): Promise<void> {
