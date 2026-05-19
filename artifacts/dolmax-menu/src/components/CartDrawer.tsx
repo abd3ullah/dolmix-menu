@@ -75,7 +75,9 @@ export function CartDrawer({ open, onOpenChange, cart, serviceInfo }: CartDrawer
   };
 
   const handleCheckout = () => {
-    if (!name || !phone) {
+    // Dine-in (صالة) needs only the table number (already chosen at the gate).
+    // Other service types still require name + phone.
+    if (!isDineIn && (!name || !phone)) {
       toast.error('يرجى إدخال الاسم ورقم الهاتف');
       return;
     }
@@ -89,15 +91,22 @@ export function CartDrawer({ open, onOpenChange, cart, serviceInfo }: CartDrawer
     }
 
     let orderText = `🌿 طلب جديد من DOLMIX\n\n`;
-    orderText += `━━━━━━━━━━━━━━━━━━\n`;
-    orderText += `📌 نوع الخدمة: ${serviceInfo.serviceType}\n`;
-    if (isDineIn && serviceInfo.tableNumber !== undefined) {
-      orderText += `🪑 رقم الطاولة: ${serviceInfo.tableNumber}\n`;
+    if (isDineIn) {
+      // Centered dine-in header: service type + table number, then separator.
+      orderText += `         صالة\n`;
+      if (serviceInfo.tableNumber !== undefined) {
+        orderText += `      طاولة رقم ${serviceInfo.tableNumber}\n`;
+      }
+      orderText += `━━━━━━━━━━━━━━\n\n`;
+      orderText += `الطلبات:\n`;
+    } else {
+      orderText += `━━━━━━━━━━━━━━━━━━\n`;
+      orderText += `📌 نوع الخدمة: ${serviceInfo.serviceType}\n`;
+      orderText += `━━━━━━━━━━━━━━━━━━\n\n`;
+      orderText += `الاسم: ${name}\n`;
+      orderText += `رقم الهاتف: ${phone}\n\n`;
+      orderText += `الطلبات:\n`;
     }
-    orderText += `━━━━━━━━━━━━━━━━━━\n\n`;
-    orderText += `الاسم: ${name}\n`;
-    orderText += `رقم الهاتف: ${phone}\n\n`;
-    orderText += `الطلبات:\n`;
 
     items.forEach((item, index) => {
       let displayName = item.name;
@@ -262,20 +271,24 @@ export function CartDrawer({ open, onOpenChange, cart, serviceInfo }: CartDrawer
               <div className="mt-8 bg-card border border-primary/20 rounded-2xl p-4 shadow-md">
                 <h3 className="font-bold text-lg mb-4 text-primary border-b border-border/50 pb-2">معلومات الطلب</h3>
                 <div className="space-y-3">
-                  <Input
-                    placeholder="الاسم الكريم"
-                    value={name}
-                    onChange={e => setName(e.target.value)}
-                    className="bg-background border-border"
-                  />
-                  <Input
-                    placeholder="رقم الهاتف (مثال: 0770...)"
-                    type="tel"
-                    value={phone}
-                    onChange={e => setPhone(e.target.value)}
-                    className="bg-background border-border text-right"
-                    dir="rtl"
-                  />
+                  {!isDineIn && (
+                    <>
+                      <Input
+                        placeholder="الاسم الكريم"
+                        value={name}
+                        onChange={e => setName(e.target.value)}
+                        className="bg-background border-border"
+                      />
+                      <Input
+                        placeholder="رقم الهاتف (مثال: 0770...)"
+                        type="tel"
+                        value={phone}
+                        onChange={e => setPhone(e.target.value)}
+                        className="bg-background border-border text-right"
+                        dir="rtl"
+                      />
+                    </>
+                  )}
 
                   {/* ── Service Type Badge ── */}
                   <div className="rounded-xl border border-primary/30 bg-primary/5 px-3 py-2 flex items-center justify-between">
