@@ -120,10 +120,11 @@
   padding-bottom: env(safe-area-inset-bottom);
 }
 .safe-bottom-offset {
-  bottom: calc(1.5rem + env(safe-area-inset-bottom));
+  /* Sits above the fixed credit strip (≈2rem high) at the bottom. */
+  bottom: calc(3rem + env(safe-area-inset-bottom));
 }
 .safe-bottom-offset-lg {
-  bottom: calc(6rem + env(safe-area-inset-bottom));
+  bottom: calc(7.5rem + env(safe-area-inset-bottom));
 }
 
 @keyframes featuredTargetPulse {
